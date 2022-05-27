@@ -331,7 +331,6 @@ for (i in pvq_dim){
   name = i
   # name <- deparse(substitute(i))
   tmp <- df %>% 
-    filter(krybws01==1) %>% # only those who've heard of crypto
     dplyr::select(i) %>% 
     ltm::cronbach.alpha(.,na.rm=TRUE,CI=TRUE,B=100)
   
@@ -356,7 +355,6 @@ for (i in valigo_dim){
   name = i
   # name <- deparse(substitute(i))
   tmp <- df %>% 
-    filter(krybws01==1) %>% # only those who've heard of crypto
     dplyr::select(i) %>% 
     ltm::cronbach.alpha(.,na.rm=TRUE,CI=TRUE,B=100)
   
@@ -379,7 +377,6 @@ for (i in pvq_hov){
   name = i
   # name <- deparse(substitute(i))
   tmp <- df %>% 
-    filter(krybws01==1) %>% # only those who've heard of crypto
     dplyr::select(i) %>% 
     ltm::cronbach.alpha(.,na.rm=TRUE,CI=TRUE,B=100)
   
@@ -402,7 +399,6 @@ for (i in valigo_hov){
   name = i
   # name <- deparse(substitute(i))
   tmp <- df %>% 
-    filter(krybws01==1) %>% # only those who've heard of crypto
     dplyr::select(i) %>% 
     ltm::cronbach.alpha(.,na.rm=TRUE,CI=TRUE,B=100)
   
@@ -434,7 +430,6 @@ for (i in pvq_12dim){
   name = i
   # name <- deparse(substitute(i))
   tmp <- df %>% 
-    filter(krybws01==1) %>% # only those who've heard of crypto
     dplyr::select(i) %>% 
     ltm::cronbach.alpha(.,na.rm=TRUE,CI=TRUE,B=100)
   
@@ -462,7 +457,7 @@ names_pvq <- df %>% select(starts_with("pvq")) %>% names()
 names_valigo <- df %>% select(starts_with("lgi")) %>% select(-lgioq01,-lgioq02) %>%  names()
 
 
-df_ipst <- df %>%  filter(krybws01==1) # only those who've heard of crypto
+df_ipst <- df 
 df_ipst$pvq_mean <- rowMeans(df_ipst[names_pvq], na.rm = FALSE)
 df_ipst$valigo_mean <- rowMeans(df_ipst[names_valigo], na.rm = FALSE)
 
