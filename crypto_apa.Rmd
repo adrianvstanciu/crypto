@@ -106,7 +106,7 @@ mytheme <- theme(axis.text.x = element_text(angle = 45, vjust = 0.9, hjust=1, si
 
 Cryptocurrencies are digital money, and much more. The idea of cryptocurrency has developed recently, in 2009, when a person or a group of people known as Satoshi Nakamoto have launched a novel currency that was entirely digital and based on a chain of mathematical algorithms. Their vision was one in which the centralized financial system as we know it can one day be de-centralized in that financial transactions will be possible directly between involved parties. The idea was a simple one: by eliminating the role of banks and governmental bodies that secure trust in financial transactions, unnecessary taxes can be eliminated, people can have more control of their finances, as well as global barriers due to currency conversion might as well be abolished. This has since entered the public knowledge domain and is now known as Bitcoin. Several variations of it and a number of alternative cryptocurrencies later, and it is becoming increasingly clear that the topic is no longer in the under-ground of our society, but quite the contrary, it is here to stay.
 
-This research sets to explore reasons why some people are interested in this new form of finance whereas other are against it, or they are skeptical. We focus on the role of human values as possible explanators and seek to understand associations with an interest in and motivation to invest in cryptocurrencies among the general German population. We look at the associations between human values in the Theory of Basic Human Values [TBHV, @Schwartz2012] and varying cryptocurrency items as formulated in a recent survey by the OECD [@OECD2019]. Data for the study stems from a quota sample in line with the demographics of the German general population and was collected in April 2022.
+This research sets to explore reasons why some people are interested in this new form of finance whereas other are against it, or they are skeptical. Throughout the paper we refer to digital currencies and cryptocurrencies interchangebly, inspite of several differences between them [see @Cryptoverze2020]. We focus on the role of human values as possible explanators and seek to understand associations with engagement with cryptocurrencies in the general German population. We look at the associations between human values in the Theory of Basic Human Values [TBHV, @Schwartz2012] and varying cryptocurrency items as formulated in a recent survey by the OECD [@OECD2019]. Data for the study stems from a quota sample in line with the demographics of the German general population and was collected in April 2022.
 
 ## Cryptocurrencies 
 
@@ -116,7 +116,7 @@ This research sets to explore reasons why some people are interested in this new
 
 TBHV is currently the most complete theory of human values [@Schwartz2012; @Schwartzetal2012; @SchwartzBoehnke2004]. This theory states that values represent socially desirable goals that individuals pursue in coping with existential needs. There are ten [or nineteen according to the refined theory, @Schwartzetal2012] value types that transcend specific actions and situations and serve as standards (see Figure 1). These value types are universal in the sense that individuals, regardless of age, gender, country of birth or any other attributes, endorse them to some degree. Therefore, people differ not in the endorsement of one value over another, but they do because they prioritize one value more than the other.
 
-![Value typologies specified in the non-refined TBHV. This is portrayed here and not the refined TBHV because the values described in the latter are collapsable onto the original ten](img/Circumplex.png){ width="55%"}
+![Value typologies specified in the non-refined TBHV. This is portrayed here and not the refined TBHV because the values described in the latter are collapsable onto the original ten.](img/Circumplex.png){ width="55%"}
 
 The theory organizes value types according to incompatibilities between underlying goal motivation in a circular fashion. For instance, universalism opposes power since the motivational goal of the former is protection for the welfare of all people and of the latter is dominance over people and resources. Or, conformity conflicts with self-direction since the motivational of the former is restraint of impulses likely to violate social expectations or norms and of the latter is independent thought. These examples were not given randomly; due to shared motivational contents, specific values pertain to a higher ordering of values in fact. Self-enhancement, conformity, and tradition all share the goal of maintaining the status quo which is incompatible with the goal of being open to change shared by hedonism, self-transcendence, and self-direction. On the other hand, universalism and benevolence share the goal of transcending the self which contrasts the goal of enhancing the self-shared by achievement and power. It is because of these relations of goal incompatibility that values drive and motivate human behavior [also see @BardiSchwartz2003].
 
@@ -162,17 +162,25 @@ Human values were measured in the refined TBHV [@Schwartz2012; @Schwartzetal2012
 
 #### Intention creation
 
-Under intention creation we subsume awareness of and general beliefs on cryptocurrencies. _Awareness_ was self-reported as either 1 = _already has_ or 2 = _never has_ heard of digital currencies and cryptocurrencies. Awareness served as a filter question: Participants who have already heard of this topic were later inquired about reasons for holding, whereas those participants who never heard of the topic were later inquired about their reasons for not holding. 
+Under intention creation we subsumed awareness and understanding of and general beliefs on cryptocurrencies. _Awareness_ was self-reported as (1) _already has_ or (2) _never has_ heard of them. Awareness served as a filter question: Only participants who already have heard of the topic continued to answer the following questions. The rest were thanked for their participation and their study ended.
 
-_General beliefs_ were measured in five questions, each probing a distinct dimension of concern (or hope) among people in society: Digital currencies and cryptocurrencies (a) are an investment opportunity, (b) can be a money exchange opportunity, (c) are regularized by the state and (d) facilitate illegal commerce. The fifth item asked whether participants thought that it was a good time to buy digital currencies of cryptocurrencies. These items are measured on a 5-point Likert scale where 1 = _complete disagreement_ and 5 = _complete agreement_. These questions were shown only to those participants who already heard or digital currencies and cryptocurrencies.
+_Understanding_ was measured with a single-item question as to how good or bad participants understood in their opinion cryptocurrencies. Their answer was recorded on a 5-point Likert scale where 1 = _not that well_ and 5 = _very good_.
+
+_General beliefs_ were measured in five questions, each probing a distinct dimension of concern (or hope) among people in society: Cryptocurrencies (1) are an investment opportunity, (2) can be a money exchange opportunity, (3) are regularized by the state and (4) facilitate illegal commerce. The fifth item asked whether participants thought that it was a good time to buy cryptocurrencies. These items were measured on a 5-point Likert scale where 1 = _complete disagreement_ and 5 = _complete agreement_. 
+
+The latter two questions were shown only to those participants who already heard of cryptocurrencies.
 
 #### Holding
 
-Under _holding_ we subsume the actual behavior of presently holding or in the future intending on holding cryptocurrencies as well as reasons for doing so. 
+Under _holding_ we subsumed presently holding or in the future intending on holding cryptocurrencies as well as reasons for doing so. Answer options for holding behavior were (1) _now_, (2) _in the past_, or (3) _never_. This question was a filter question to reasons for acquisition: Participants who chose either of the first two answer options were later inquired about their reasons for holding cryptocurrencies, whereas participants who chose the latter answer option were inquired about their reasons for not holding cryptocurrencies. 
+
+_Holding in the future_ was measured with a single-item while the answer options were (1) _would like to_, (2) _would not like to_, or (3) _undecided_.
+
+_Reasons for acquiring cryptocurrencies_ were measured with a single-item and participants could choose up to three of eleven answers: (1) fear of missing something out, (2) only for fun, (3) to learn more about cryptocurrencies, (4) to win money fast, (5) as a long-term investment option, (6) for inheritance purposes, (7) to support the Block-chain technology, (8) to be able to pay for online shopping, (9) for money transfer purposes, (10) to diversify own investment portofolio, (11) other reason.
+
+_Reasons for not acquiring cryptocurrencies_ were measured with a single-item question and participants could choose up to three of ten answers: (1) cannot afford it, (2) risk is too high, (3) insufficient knowledge, (4) insufficient control by state, (5) other investment more appealing, (6) no interest in cryptocurrencies, (7) generally no interest in investment, (8) price volatility is worrying, (9) money needed for other things, (10) other reason.
 
 ## Aanalytical approach
-
-
 
 # Results
 
