@@ -1,0 +1,79 @@
+---
+title: "Crypto exploratory visualization"
+author: "Ranjit"
+date: '2022-05-31'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+load("data/df.Rdata")
+```
+
+```{r}
+df_ipst %>% view()
+
+df_ipst %>% 
+  select(pvq_STR:pvq_OCH) %>% 
+  cor()
+
+# pvq_STR - Self-Transcendence
+# pvq_CON - Conservation
+# pvq_SEN - Self-Enhancement
+# pvq_OCH - opennness to change
+
+df_ipst$krybst01
+
+df_labels %>% 
+  filter(var_name == "krybst01") %>% 
+  pull(value_labels)
+
+df_ipst %>% 
+  ggplot(aes(krybst01 %>% factor))+
+  geom_histogram(stat="count")
+
+df_ipst %>% 
+  mutate(across(contains("kryb"), na_if, -77)) %>% 
+  mutate(across(pvq_STR:pvq_OCH, scale)) %>% 
+  drop_na(contains("kryb")) %>% 
+  mutate(
+    crypto_posession = if_else(krybst01 == 3, FALSE, TRUE)
+  ) %>% 
+  pivot_longer(cols = pvq_STR:pvq_OCH, names_to = "value_dim", values_to = "value_score") %>% 
+  mutate(value_dim = factor(value_dim,
+                            levels = c("pvq_STR", "pvq_SEN", "pvq_OCH", "pvq_CON"),
+                            labels = c(
+                              "Self-Transcendence",
+                              "Self-Enhancement",
+                              "Openness to Change",
+                              "Conservation"
+                            ))) %>% 
+  group_by(value_dim, crypto_posession) %>% 
+  mutate(value_median = median(value_score)) %>% 
+  ggplot(aes(value_score, color = crypto_posession), stat = "unique")+
+  facet_grid(rows = vars(value_dim), switch = "both")+
+  geom_vline(xintercept = 0)+
+  geom_density(size = 1.5)+
+  geom_vline(aes(xintercept = value_median, color = crypto_posession),
+             size = 1)+
+  theme_minimal(base_size = 16)+
+  scale_x_continuous(limits = c(-3, 3), breaks = c(-3: 3), minor_breaks = NULL)+
+  xlab("Value Score (z)")+
+  labs(
+    title = "Density plot: Value dimensions",
+    caption = "Values are z-standardized; Horizontal line is the median"
+  )+
+  theme(
+    legend.position = "bottom",
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    strip.text.y.left = element_text(angle = 0, hjust = 1),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
+  )
+
+
+```
+
