@@ -90,6 +90,7 @@ library("corrplot")
 load("data/df.Rdata")
 load("data/descriptives.Rdata")
 load("data/pca.Rdata")
+load("data/gradient.Rdata")
 
 # --- imports source scripts
 source("scripts/helper_functions.R")
@@ -122,7 +123,7 @@ The theory organizes value types according to incompatibilities between underlyi
 
 ## The present research
 
-Why should it matter if values inform people's interst in cryptocurrencies? What makes values ultimately relevant is that they are culture-informed, have a developmental trajectory that is lifelong [refer here manuscript by Smallenbroek, Stanciu et al], while they can change due to specific life events such as entering parenthood [@Lonnqvistetal2018], but also due to drastic changes in society such as due to the Covid-19 Pandemic [@Danieletal2022]. Cryptocurrencies hold several similarities with other technological advancements such as the Internet and mobile phones. Compared to previous advancements however, the notion of cryptocurrencies is also in a way an economic and political statement [Mariana = do you have a citation for this?]. Though this technology is still in its onset stage, there are reasons to expect that it will impact people's financial awareness and potentially people's dependencies on established monetary and governmental institutions [Mariana = do you have a citation for this?]. 
+Why should it matter if values inform people's interst in cryptocurrencies? What makes values ultimately relevant is that they are culture-informed, have a developmental trajectory that is lifelong [refer here manuscript by Smallenbroek, Stanciu et al], while they can change due to specific life events such as entering parenthood [@Lonnqvistetal2018], but also due to drastic changes in society such as due to the Covid-19 Pandemic [@Danieletal2022]. Cryptocurrencies hold several similarities with other technological advancements such as the Internet and mobile phones. Compared to previous advancements however, the notion of cryptocurrencies is also in a way an economic and a political statement [Mariana = do you have a citation for this?]. Though this technology is still in its onset, there are reasons to expect that it will impact people's financial awareness and potentially people's dependencies on established monetary and governmental institutions [Mariana = do you have a citation for this?]. 
 
 In other words, the concept of cryptocurrency is potentially going to shape in the future in currently unknown ways people's motivational goals. We speak of the future because we want to raise awareness that a new technology is now being adopted, in spite of groups of people being against it or disbelieving its mission. This is happening. Therefore, to begin understanding how this will shape our beliefs in the future, we reason that the pertinent first step is to explore what makes this technology possible from a social perspective. That is, why some people are interested, engaged with, and open for this form of finance, while others are not. 
 
@@ -176,7 +177,7 @@ Under _holding_ we subsumed presently holding or in the future intending on hold
 
 _Holding in the future_ was measured with a single-item while the answer options were (1) _would like to_, (2) _would not like to_, or (3) _undecided_.
 
-_Reasons for acquiring cryptocurrencies_ were measured with a single-item and participants could choose up to three of eleven answers: (1) fear of missing something out, (2) only for fun, (3) to learn more about cryptocurrencies, (4) to win money fast, (5) as a long-term investment option, (6) for inheritance purposes, (7) to support the Block-chain technology, (8) to be able to pay for online shopping, (9) for money transfer purposes, (10) to diversify own investment portofolio, (11) other reason.
+_Reasons for acquiring cryptocurrencies_ were measured with a single-item and participants could choose up to three of eleven answers: (1) fear of missing out, (2) for fun, (3) to learn more about cryptocurrencies, (4) win money fast, (5) long-term investment option, (6) inheritance purposes, (7) support of Block-chain technology, (8) online shopping, (9) money transfer, (10) investment portofolio diversification, (11) other reason.
 
 _Reasons for not acquiring cryptocurrencies_ were measured with a single-item question and participants could choose up to three of ten answers: (1) cannot afford it, (2) risk is too high, (3) insufficient knowledge, (4) insufficient control by state, (5) other investment more appealing, (6) no interest in cryptocurrencies, (7) generally no interest in investment, (8) price volatility is worrying, (9) money needed for other things, (10) other reason.
 
@@ -185,6 +186,13 @@ _Reasons for not acquiring cryptocurrencies_ were measured with a single-item qu
 # Results
 
 ## Descriptives
+
+```{r}
+# alternative to the one below
+gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurrencies in the present sample",
+                                      format="pipe", digits = 2) 
+```
+
 
 # Discussion
 
