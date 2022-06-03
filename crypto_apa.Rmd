@@ -1,5 +1,5 @@
 ---
-title: "Can human values explain one’s interest in cryptocurrencies? A correlational study in Germany"
+title: "Can human values explain one’s interest in cryptocurrencies? An explorative study in Germany"
 author: 
   - name: "Adrian Stanciu"
     affiliation_number: 1
@@ -129,7 +129,7 @@ In other words, the concept of cryptocurrency is potentially going to shape in t
 
 We study the link between human values and an interest in cryptocurrencies in a general sense. We draw on the Theory of Planned Behavior [TPB, @Ajzen1991; @ConnerArmitage1998] and seek to identify a "gradient" that describes the influence of human values at varying stages in the formation of actual behavior of holding cryptocurrencies. TPB suggests that behavior takes shape after an intention was formed, which in turn has been informed by attitudes, subjective norms and perceived behavioral control. Studying the role of values in the more generalist theory of planned behavior is not a novelty in the literature. For instance, @Kruseetal2019 examined the effects of human values on social entrepreneurship (intention to solving societal issues) as mediated by attitudes, subjective norms and a perceived behavioral control. One further example is the work by @Stanciu2022 on explaining ageism towards older people. Stanciu reasoned that human values can act as internal motives to either suppress or justify negative stereotypes and prejudice which in turn can explain discriminatory behavior towards older people in younger individuals. 
 
-Thus, we explore the role of values in (a) creating an intention to (b) presently or in the future hold cryptocurrencies. _Intention creation_ is here defined as possessing knowledge of/having awareness of what cryptocurrencies are and what they stand for. _Holding of cryptocurrencies_ is here understood as possession/intention on possessing them in the future. Please note that this study does not test for causal mechanisms and therefore the present study frame and hypotheses have the role of guiding our interpretations of findings rather than informing claims about theory.
+Thus, we explore the role of values in (a) creating an intention to (b) presently or in the future hold cryptocurrencies. _Intention creation_ is here defined as possessing knowledge of/having awareness of what cryptocurrencies are and what they stand for. _Holding of cryptocurrencies_ is here understood as possession/intention on possessing them in the future. Please note that this study does not test for causal mechanisms and therefore the present study frame and hypotheses have the role of guiding our interpretations of findings rather than informing claims about theory. We attempt a first insight into this phenomenon in Germany, while an end-goal is to prepare, so-to-speak, the study of the topic in more generalist surveys here. 
 
 We can think of two approaches to how human values contribute to a person's interest in cryptocurrencies. Please note that this is here meant in a general sense; it addresses both awareness and holding of cryptocurrencies as well as overall beliefs about the topic. First, we acknowledge the fact that cryptocurrencies are a new form of finance thus it is potentially linked with people's motivational goals of accepting or rejecting novelty in their life. The first hypothesis is that values of openness to change will associate with a stronger interest in cryptocurrencies (Hypothesis 1). 
 
@@ -183,7 +183,17 @@ _Reasons for not acquiring cryptocurrencies_ were measured with a single-item qu
 
 ## Aanalytical approach
 
+We study the link between human values and interest in cryptocurrencies in an explorative manner. First, we look for evidence on limitations of the present sample concerning its representativity to the German general population. To do so, we compare the sample quotas of gender, age and education to the respective population numbers from the German Microcensus, which covers 1% of the persons and households [@ add literature]. Furthermore, we use secondary resources such as published literature [e.g., @Witteetal2020] and available data sets [European Social Survey, @ add literature] to understand how does the present sample fare when compared to the German general population in view of percentage of people with a specific value preference. 
+
+Second, we decompose the present sample according to a gradient from intention creation to behavior. Since the present data was collected with a questionnaire that used strategic filter questions, we can therefore re-trace at the sample level which participants (1) heard of, (2) currently are and (3) intend on holding cryptocurrencies. This funneling out due to study design allows us then to explore at each stage the role of human values. That is, we investigate frequency distributions, density curves, and central tendency indicators (e.g., mean, median) and seek to determine whether human values play comparable roles at each of the three levels mentioned above. 
+
+Finally, we explore associations between human values and beliefs that people associate with the cryptocurrency topic, as well as reasons for either holding nor not holding cryptocurrencies.
+
 # Results
+
+## Sample representativity
+
+
 
 ## Descriptives
 
@@ -195,6 +205,8 @@ gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurren
 
 
 # Discussion
+
+Our sample was not representative to the German general population, but it used strict quotas of gender, age and education. Please note that our intention was to gain first insights into an overall pattern regarding adoption of cryptocurrencies in society. 
 
 ## Limitations and future research
 
