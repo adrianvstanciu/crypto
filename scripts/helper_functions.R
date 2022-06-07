@@ -167,3 +167,89 @@ pca_centered <- function(data, items, nfactors = 2, rotation =  "varimax") {
     psych::principal(nfactors = nfactors, rotate = rotation) 
   
 }
+
+## 
+
+library("ltm") # contains cronbach.alpha() function
+library("dplyr")
+
+#OCH <- c("ipcrtiv", "impfree", "ipmdiff", "ipadvnt","ipgdtim", "impfun")
+#CONV <- c("impsafe", "ipstrgv", "ipfrule", "ipbhprp", "ipmodst", "imptrad")
+#SEN <- c("imprich", "iprspot", "ipshabt", "ipsuces")
+#STR <- c("ipeqopt", "ipudrst", "impenv", "iphlppl", "iplylfr")
+
+cronbach_compute_ess_4hov <- function(data,na.rm=TRUE,CI=TRUE,B=100){
+  
+  name <- deparse(substitute(data))
+  
+  # empty table to be populated with results
+  cronb_df <- tibble(
+    data.name = vector("character",0),
+    hov = vector("character",0),
+    alpha = vector("numeric",0),
+    ci_low = vector("numeric",0),
+    ci_high = vector("numeric",0)
+  )
+  
+  #### for each of the 4 hov a diff data set
+  
+  # calculates cronbach alpha
+  
+  ## openness to change
+  och_tmp <- data %>% 
+    dplyr::select(ipcrtiv,impfree,impdiff,ipadvnt,ipgdtim,impfun) %>% 
+    ltm::cronbach.alpha(.,na.rm=na.rm,CI=CI,B=B)
+  ## extracts results and adds to the empty data set cronb_df
+  cronb_df <- cronb_df %>% add_row(
+    data.name = name, # uses the name of a data.frame as char
+    hov = "och",
+    alpha = och_tmp$alpha,
+    ci_low = och_tmp$ci[1],
+    ci_high = och_tmp$ci[2]
+  )
+  
+  ## conformism
+  conv_tmp <- data %>% 
+    dplyr::select(impsafe, ipstrgv, ipfrule, ipbhprp, ipmodst, imptrad) %>% 
+    ltm::cronbach.alpha(.,na.rm=na.rm,CI=CI,B=B)
+  
+  ## extracts results and adds to the empty data set cronb_df
+  cronb_df <- cronb_df %>% add_row(
+    data.name = name,
+    hov = "conv",
+    alpha = conv_tmp$alpha,
+    ci_low = conv_tmp$ci[1],
+    ci_high = conv_tmp$ci[2]
+  )
+  
+  ## self-enhancement
+  sen_tmp <- data %>% 
+    dplyr::select(imprich, iprspot, ipshabt, ipsuces) %>% 
+    ltm::cronbach.alpha(.,na.rm=na.rm,CI=CI,B=B)
+  
+  ## extracts results and adds to the empty data set cronb_df
+  cronb_df <- cronb_df %>% add_row(
+    data.name = name,
+    hov = "sen",
+    alpha = sen_tmp$alpha,
+    ci_low = sen_tmp$ci[1],
+    ci_high = sen_tmp$ci[2]
+  )
+  
+  ## self-transcendence
+  str_tmp <- data %>% 
+    dplyr::select(ipeqopt, ipudrst, impenv, iphlppl, iplylfr) %>% 
+    ltm::cronbach.alpha(.,na.rm=na.rm,CI=CI,B=B)
+  
+  ## extracts results and adds to the empty data set cronb_df
+  cronb_df <- cronb_df %>% add_row(
+    data.name = name,
+    hov = "str",
+    alpha = str_tmp$alpha,
+    ci_low = str_tmp$ci[1],
+    ci_high = str_tmp$ci[2]
+  )
+  
+  
+}## closes function " cronbach_compute_ess_4hov"
+

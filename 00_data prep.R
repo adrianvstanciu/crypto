@@ -481,6 +481,12 @@ df_ipst <- df_ipst %>%
   sjlabelled::set_na(krybsz01,na=0) %>% 
   mutate_at(vars("kryftl07"), flip_item)
 
+# --- schwartz circle 
+# uses LittleHelpers source package from Maksim Rudnev: https://github.com/MaksimRudnev/LittleHelpers/
+
+#pdf("img/schwartz_circle.pdf", height = 7, width = 12)
+#LittleHelpers::schwartz_circle()
+#dev.off()
 
 ## --- save data
 
