@@ -38,16 +38,31 @@ source("scripts/helper_functions.R")
 # --- imports data
 tempdf<-haven::read_sav("./data/data_project_1036337_2022_02_28.sav",user_na = T)
 
+
+
+# --- exclude participants due to data quality concerns (answered 15 or more questions with the same answer OR 
+# the within person SD over all PVQ items was SD < 0.5, which is considered too small and with too little variability)
+library("readxl")
+
+excludeid <- read_excel("data/exlude_ids.xlsx")
+p0001<-as.list(excludeid[1])
+p0002<-as.list(excludeid[2])
+
+dropndf<-filter(tempdf, 
+              !p_0001 %in% p0001$p_0001)
+dropndf<-filter(tempdf, 
+              !p_0002 %in% p0002$p_0002)
+
+ndrop <- length(tempdf$lfdn)-length(dropndf$lfdn)
+
 # --- selects only variables of interest
-df <- tempdf %>% 
-  select(age,sex,edu, # demographics
-         starts_with("inc"), # income
-         employ, # employment
-         starts_with("lgi"), # valigo value instrument
-         starts_with("pvq"), # pvq value instrument
-         starts_with("kry")) # krypto items
-
-
+df <- dropndf %>% 
+  dplyr::select(age,sex,edu, # demographics
+                starts_with("inc"), # income
+                employ, # employment
+                starts_with("lgi"), # valigo value instrument
+                starts_with("pvq"), # pvq value instrument
+                starts_with("kry")) # krypto items
 
 # --- Variable and Value labels in a data frame
 df_labels <- register_labels(df)
@@ -117,7 +132,7 @@ df <- df %>% mutate(pvqsd01 = coalesce(pvqsd01m,pvqsdt01f),
                        pvqbed55 = coalesce(pvqbed55m,pvqbed55f),
                        pvqsda56 = coalesce(pvqsda56m,pvqsda56f),
                        pvqunt57 = coalesce(pvqunt57m,pvqunt57f)) %>% 
-           select(-ends_with("m"),
+           dplyr::select(-ends_with("m"),
                      -ends_with("f"))
 
 ## --- indices
@@ -414,7 +429,7 @@ for (i in valigo_hov){
   
 }
 cronb_df[34:37,]$indexe <- names(valigo_hov)
-cronb_df <- cronb_df %>%relocate(indexe, .before=alpha) %>% subset(.,select=-variable) %>% round_df()
+cronb_df <- cronb_df %>% relocate(indexe, .before=alpha) %>% subset(.,select=-variable) %>% round_df()
 
 
 # - cronbach alpha for Schwartz 12 dimensions
@@ -453,8 +468,8 @@ cronbach <- full_join(cronb_df, cronb_tmp)
 
 # --- Ipsatization and then Scale construction
 
-names_pvq <- df %>% select(starts_with("pvq")) %>% names()
-names_valigo <- df %>% select(starts_with("lgi")) %>% select(-lgioq01,-lgioq02) %>%  names()
+names_pvq <- df %>% dplyr::select(starts_with("pvq")) %>% names()
+names_valigo <- df %>% dplyr::select(starts_with("lgi")) %>% dplyr::select(-lgioq01,-lgioq02) %>%  names()
 
 
 df_ipst <- df 
@@ -470,7 +485,7 @@ df_ipst <- df_ipst %>% rowwise() %>%
   scale_builder(., valigo_dim, score_fun = "mean") %>% 
   scale_builder(., pvq_hov, score_fun = "mean") %>% 
   scale_builder(., valigo_hov, score_fun = "mean") %>% 
-  select(-one_of(valigo_SEN),-one_of(valigo_STR),
+  dplyr::select(-one_of(valigo_SEN),-one_of(valigo_STR),
          -one_of(valigo_CON),-one_of(valigo_OCH),
          -one_of(pvq_SEN),-one_of(pvq_STR),
          -one_of(pvq_CON),-one_of(pvq_OCH))
@@ -493,5 +508,5 @@ df_ipst <- df_ipst %>%
 save(list=c("df", "df_ipst",
             "df_labels","cronbach",
             "pvq_dim","pvq_hov",
-            "valigo_dim","valigo_hov"),
+            "valigo_dim","valigo_hov","ndrop"),
      file="data/df.Rdata")

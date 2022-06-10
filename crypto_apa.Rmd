@@ -23,7 +23,9 @@ doctype: doc
 header-includes:
   - \usepackage{subfig}
 output: 
-  pdf_document:
+  bookdown::pdf_document2:
+    toc: False
+    number_sections: False
     template: "style/template.tex"
 csl: style/apa.csl
 bibliography: reference.bib
@@ -92,6 +94,7 @@ load("data/df.Rdata")
 load("data/descriptives.Rdata")
 load("data/pca.Rdata")
 load("data/gradient.Rdata")
+load("data/represent.Rdata")
 
 # --- imports source scripts
 source("scripts/helper_functions.R")
@@ -130,7 +133,7 @@ In other words, the concept of cryptocurrency is potentially going to shape in t
 
 We study the link between human values and an interest in cryptocurrencies in a general sense. We draw on the Theory of Planned Behavior [TPB, @Ajzen1991; @ConnerArmitage1998] and seek to identify a "gradient" that describes the influence of human values at varying stages in the formation of actual behavior of holding cryptocurrencies. TPB suggests that behavior takes shape after an intention was formed, which in turn has been informed by attitudes, subjective norms and perceived behavioral control. Studying the role of values in the more generalist theory of planned behavior is not a novelty in the literature. For instance, @Kruseetal2019 examined the effects of human values on social entrepreneurship (intention to solving societal issues) as mediated by attitudes, subjective norms and a perceived behavioral control. One further example is the work by @Stanciu2022 on explaining ageism towards older people. Stanciu reasoned that human values can act as internal motives to either suppress or justify negative stereotypes and prejudice which in turn can explain discriminatory behavior towards older people in younger individuals.
 
-[here a paragraph on previous studies on explaning crypto interest. See Marie's document]
+[here a paragraph on previous studies on explaning crypto interest. See Marie's (not Mariana!) document]
 
 Thus, we explore the role of values in (a) creating an intention to (b) presently or in the future hold cryptocurrencies. *Intention creation* is here defined as possessing knowledge of/having awareness of what cryptocurrencies are and what they stand for. *Holding of cryptocurrencies* is here understood as possession/intention on possessing them in the future. Please note that this study does not test for causal mechanisms and therefore the present study frame and hypotheses have the role of guiding our interpretations of findings rather than informing claims about theory. We attempt a first insight into this phenomenon in Germany, while an end-goal is to prepare, so-to-speak, the study of the topic in more generalist surveys here.
 
@@ -147,12 +150,17 @@ age.m = mean(df_ipst$age) %>% round_df()
 age.sd = sd(df_ipst$age) %>% round_df()
 age.min = as.numeric(summary(df_ipst$age)[1])
 age.max = as.numeric(summary(df_ipst$age)[6])
-p.fem = sample[18,5] %>% round_df()
-p.emp = sample[8,5] %>% round_df()
+p.fem = sample[17,5] %>% round_df()
+p.emp = sample[7,5] %>% round_df()
 p.educ = sample[4,5] %>% round_df()
+
+# 
+nstudy=unique(sample$total_n)
 ```
 
-Data from *N* = `r unique(sample$total_n)` participants (age: *M* = `r age.m`, *SD* = `r age.sd`; Min = `r age.min`, Max = `r age.max`) were collected by respondi in April 2022 in Germany. The sampling strategy used predefined quotas of gender, education, and employment in line with the German general population. Of the present sample there were `r p.fem`% women, `r p.emp`% employed, and `r p.educ`% had finished at least ten classes in the local education system (i.e., *Mittlerer Schulabschluss*).
+A total of _N_ = `r nstudy+ndrop` participants were interviewed in an online questionnaire by _respondi_ in April 2022 in Germany. The sampling strategy used quotas of gender, education level, and age categories to meet the general population standards. These quotas were created in accordance with the respective numbers in the population as was recorded in the Microcensus 2017, which covers 1% of the persons and households in the country [\@ add literature]. Upon a quality check in view of their answers on the present value items, we had to exclude _n_ = `r ndrop` participants due to straightlining (identical answers on 15 consecutive items) and an overal lack of answer variation (within-person _sd_ < 0.50).
+
+The cleaned and final data for the present study had _N_ = `r nstudy` participants (age: *M* = `r age.m`, *SD* = `r age.sd`; Min = `r age.min`, Max = `r age.max`). Of these there were `r p.fem`% women, `r p.emp`% employed, and `r p.educ`% had finished at least ten classes in the local education system (i.e., *Mittlerer Schulabschluss*) (also see Table \@ref(tab:t1) in Results).
 
 ## Measurement
 
@@ -186,7 +194,7 @@ Under *holding* we subsumed presently holding or in the future intending on hold
 
 ## Aanalytical approach
 
-We studied the link between human values and interest in cryptocurrencies in an explorative manner. First, we looked for evidence on limitations of the present sample concerning its representativity to the German general population. To do so, we compared the sample quotas of gender, age and education to the respective population numbers from the German Microcensus, which covers 1% of the persons and households [\@ add literature]. Furthermore, we used secondary resources such as published literature [e.g., @Witteetal2020] and available data sets [European Social Survey, \@ add literature] to understand how did the present sample fare when compared to the German general population in view of percentage of people with a specific value preference.
+We studied the link between human values and interest in cryptocurrencies in an explorative manner. First, we used secondary sources such as published literature [e.g., @Witteetal2020] and available data sets [European Social Survey, \@ add literature] to understand how did the present sample fare when compared to the German general population in view of representativity. This step allowed us to understand limitations of generalizing findings on the association between values and cryptocurrency interst to the population in the country.
 
 Second, we decomposed the present sample according to a gradient from intention creation to behavior. Since the present data was collected with a questionnaire that used strategic filter questions, we were able to re-trace at the sample level which participants (1) heard of, (2) currently are and (3) intend on holding cryptocurrencies. This funneling out due to study design allowed us then to explore at each stage the role of human values. That is, we investigated frequency distributions, density curves, and central tendency indicators (e.g., mean, median) and determined whether human values had comparable roles at each of the three levels mentioned above.
 
@@ -196,19 +204,100 @@ Finally, we explored associations between human values and beliefs that people a
 
 # Results
 
-## Sample representativity
+## Representativity
+
+```{r t1}
+# sample representativity compared to microcensus (fehlt noch) and ess 2018
+dissim_prop %>% 
+  knitr::kable(caption = "Sample representativity after age, education, and gender compared to Microcenus 2020 and European Social Survey 2018",
+               format="pipe", digits = 2) %>%
+ add_footnote("Relative percentages from the sample indicated in column Data.")
+```
+
+```{r}
+# -- percentage of difference of the present data from representative surveys: ess and microcensus
+# - age
+age1830 = dissim_prop[2,6] %>% as.numeric() %>% round_df() %>% abs()
+age3040 = dissim_prop[4,6] %>% as.numeric() %>% round_df() %>% abs()
+age5060 = dissim_prop[8,6] %>% as.numeric() %>% round_df() %>% abs()
+age6070 = dissim_prop[10,6] %>% as.numeric() %>% round_df() %>% abs()
+age70 = dissim_prop[11,5] %>% as.numeric() %>% round_df() %>% abs() # equivalence study has no participants 70+
+
+# - education categories
+hauptschule = dissim_prop[17,6] %>% as.numeric() %>% round_df() %>% abs()
+mittlerreife = dissim_prop[19,6] %>% as.numeric() %>% round_df() %>% abs()
+poly = dissim_prop[21,6] %>% as.numeric() %>% round_df() %>% abs()
+
+# - gender
+men = dissim_prop[25,6] %>% as.numeric() %>% round_df() %>% abs()
+```
+
+Table \@ref(tab:t1) displays the representativity of age categories, education levels, and gender in the present data. The present data - termed "equivalence" - diverged in several ways from representative surveys and therefore from what it is expected to be the demographic structure in the German general population when human values were most recently recorded in the refined-TBHV. Concerning age, the 30-40 years old group was the most over-represented in the present study with `r age3040`% over the value in the ESS-2018, which was followed by the 50-60 group with `r age5060`% and the 18-30 group with `r age1830`% respectively over the value in the ESS-2018. The age groups 60-70 (`r age6070`%) and 70+ (`r age70`%) were on the other hand underrepresented when compared to the same survey. Concerning education, there was over-representation of categories "Volks-/Hauptschule" and "Mittlere Reife" with `r hauptschule`% and `r mittlerreife`% respectively over the values in the ESS-2018. Underrepresented was the category "Polytechnische Oberschule" with `r poly`% below the values in ESS-2018. Lastly, men were over-represented in the present data with `r men`% above the value in ESS-2018. [! wait for Microcensus data here ! bcs it seems that men should actually be fewer than women, so ESS might have oversampled men]
+
+```{r t2}
+# [-4] because third column in the table is smaple size, and that need not eb preented in the table
+df_represent_hov_joined[-4] %>% knitr::kable(caption = "The four higher order value preferences in the present data and ESS-2018", format="pipe",digits=2) %>% 
+  add_footnote(c("SEN = Self-enhancement, STR = Self-transcendence, OCH = Openness to change, CON = Conservation.",
+               "M = mean, SD = standard deviaiton, Med = median, Min = minimum value, Max = maximum value, SE = standard error"))
+```
+
+```{r}
+m_senequiv = df_represent_hov_joined[5,5] %>% as.numeric() %>% round_df()
+m_seness = df_represent_hov_joined[6,5] %>% as.numeric() %>% round_df()
+m_strequiv = df_represent_hov_joined[7,5] %>% as.numeric() %>% round_df()
+m_stress = df_represent_hov_joined[8,5] %>% as.numeric() %>% round_df()
+```
+
+Table \@ref(tab:t2) provides an overview of the four higher order value preferences in the present data and in the ESS-2018 (with a valid _n_ = `r nessvalues`). The present data matched the ESS-2018 descriptions along the openness to change - conservation dimension (CON, OCH) but not along the self-enhancement - self-transcendence dimension (SEN, STR). The preference for SEN was overall low in the present data (_M_ = `r m_senequiv`) compared to the ESS-2018 where it was very high (_M_ = `r m_seness`). Conversely, the preference for STR was overall moderate in the present data (_M_ = `r m_strequiv`) compared to the ESS-2018 where it was very low (_M_ = `r m_stress`). 
+
+Discrepancies between the surveys are not in all instances concerning given that the data is from a quota sample and not a country-representative one. Notwithstanding, the representativity of certain age categories needs to be acknowledged in discussing the effects of values on interest in cryptocurrencies in Germany.
 
 ## Gradient from intention to behavior
 
-## Associations
-
-## Descriptives
+### Reach of phenomenon
 
 ```{r}
+# percentages
+peraware = gradient_descriptive[1,4] %>% as.numeric() %>% round_df()
+perawarenot = gradient_descriptive[2,4] %>% as.numeric() %>% round_df()
+# - holding
+perholdsnow = gradient_descriptive[3,4] %>% as.numeric() %>% round_df()
+perholdspast = gradient_descriptive[4,4] %>% as.numeric() %>% round_df()
+perholdsnever = gradient_descriptive[5,4] %>% as.numeric() %>% round_df()
+# - intention 
+perintyes = gradient_descriptive[6,4] %>% as.numeric() %>% round_df()
+perintno = gradient_descriptive[7,4] %>% as.numeric() %>% round_df()
+perintunsure = gradient_descriptive[8,4] %>% as.numeric() %>% round_df()
+# - intention if never held
+pernever.intyes = gradient_descriptive[10,4] %>% as.numeric() %>% round_df()
+pernever.intno = gradient_descriptive[11,4] %>% as.numeric() %>% round_df()
+pernever.intunsure = gradient_descriptive[12,4] %>% as.numeric() %>% round_df()
+# sample
+n_aware = gradient_descriptive[3,2] %>% as.numeric() %>% round_df()
+n_notaware = nstudy - n_aware  
+```
+
+```{r t3}
 # alternative to the one below
 gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurrencies in the present sample",
-                                      format="pipe", digits = 2) 
+                                      format="pipe", digits = 2) %>% 
+  add_footnote("Awareness = 'If the study participant has previously heard of cryptocurrencies or digital currencies',
+               Holding = 'If the study participant currently holds or in the past has held cryptocurrencies or digital currencies',
+               Holding intention = 'If the study participant intends to hold cryptocurrencies or digital currencies in the future',
+               Holding intention if never held = the holding intention question asked only to those study participants who said they never held cryptocurrencies or digital currencies.")
 ```
+
+Table \@ref(tab:t3) presents the sample decomposition after cryptocurreny awareness, holding behavior now, and two combinations of holding behavior in the future. It can be seen that, _n_ = `r n_notaware` (or `r perawarenot`%) of the total sample have never heard of cryptocurrencies. Among participants who previously heard of cryptocurrencies, `r perholdsnow`% held currently, `r perholdspast`% held in the past, while `r perholdsnever`% never held cryptocurrencies. Conversely, `r perintyes`% indicated they would like to hold cryptocurrencies in the future, while `r perintno`% said no and `r perintunsure`% were undecided. Finally, among participants who previously heard of cryptocurrencies but never held, there were `r pernever.intyes`% who said they would like to in the future, while `r pernever.intno`% said that they would not, and `r pernever.intunsure`% were unsure. These percentages are a first indication that the phenomenon of cryptocurrency should not be treated as negligible. 
+
+### Reasons for behavior
+
+
+
+### Role of values
+
+
+## Associations
+
 
 # Discussion
 

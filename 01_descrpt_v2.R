@@ -22,6 +22,8 @@ library(rstatix)
 library(Hmisc)
 library(corrplot)
 library(psych)
+library(dplyr)
+library(tidyverse)
 
 # --- data import
 
@@ -65,7 +67,7 @@ gradient_futurehold_holdsnot <- df_ipst %>%
   dplyr::select(krybsz01) %>% 
   pivot_longer(everything()) %>% 
   group_by(name,value) %>% 
-  summarise(n=n()) %>% 
+  dplyr::summarise(n=n()) %>% 
   mutate(total_n=sum(n),
          prop=100*n/total_n,
          cum=100*cumsum(prop/sum(prop)))
@@ -96,17 +98,17 @@ prop_future_neverheld_nafuture = gradient_futurehold_holdsnot[4,5] %>% as.numeri
 # ---- table gradient awareness - current hold - holds in the future
 gradient_descriptive <- tibble(
   Dimension = c("Awareness","",
-                "Holding behavior currently","","",
-                "Holding intention future among those with awareness","","","",
-                "Holding intention future among those with awareness but never held","","",""),
+                "Holding","","",
+                "Holding intention ","","","",
+                "Holding intention if never held","","",""),
   N = c(n_dim_awareness,"",
                     n_dim_holds,"","",
                     n_dim_future_aware,"","","",
                     n_dim_future_holdsnownot,"","",""),
-  Case = c("Heard of crypto","Never heard of crypto",
-           "Currently holds","Held in the past","Never held",
-           "Wants to hold","Doesn't want to hold","Is unsure","Data missing",
-           "Wants to hold","Doesn't want to hold","Is unsure","Data missing"),
+  Case = c("Yes","No",
+           "Yes","Yes, in the past ","Never",
+           "Yes","No","Unsure","Data missing",
+           "Yes","No","Unsure","Data missing"),
   "%" = c(prop_heardofyes,prop_heardofno,
                          prop_holdsnow,prop_holdspast,prop_holdsnot,
                          prop_future_aware_yes,prop_future_aware_no,prop_future_aware_unclear,prop_future_aware_na,
