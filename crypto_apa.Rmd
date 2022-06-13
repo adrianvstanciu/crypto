@@ -95,6 +95,7 @@ load("data/descriptives.Rdata")
 load("data/pca.Rdata")
 load("data/gradient.Rdata")
 load("data/represent.Rdata")
+load("data/reasons.Rdata")
 
 # --- imports source scripts
 source("scripts/helper_functions.R")
@@ -206,14 +207,6 @@ Finally, we explored associations between human values and beliefs that people a
 
 ## Representativity
 
-```{r t1}
-# sample representativity compared to microcensus (fehlt noch) and ess 2018
-dissim_prop %>% 
-  knitr::kable(caption = "Sample representativity after age, education, and gender compared to Microcenus 2020 and European Social Survey 2018",
-               format="pipe", digits = 2) %>%
- add_footnote("Relative percentages from the sample indicated in column Data.")
-```
-
 ```{r}
 # -- percentage of difference of the present data from representative surveys: ess and microcensus
 # - age
@@ -232,9 +225,9 @@ poly = dissim_prop[21,6] %>% as.numeric() %>% round_df() %>% abs()
 men = dissim_prop[25,6] %>% as.numeric() %>% round_df() %>% abs()
 ```
 
-Table \@ref(tab:t1) displays the representativity of age categories, education levels, and gender in the present data. The present data - termed "equivalence" - diverged in several ways from representative surveys and therefore from what it is expected to be the demographic structure in the German general population when human values were most recently recorded in the refined-TBHV. Concerning age, the 30-40 years old group was the most over-represented in the present study with `r age3040`% over the value in the ESS-2018, which was followed by the 50-60 group with `r age5060`% and the 18-30 group with `r age1830`% respectively over the value in the ESS-2018. The age groups 60-70 (`r age6070`%) and 70+ (`r age70`%) were on the other hand underrepresented when compared to the same survey. Concerning education, there was over-representation of categories "Volks-/Hauptschule" and "Mittlere Reife" with `r hauptschule`% and `r mittlerreife`% respectively over the values in the ESS-2018. Underrepresented was the category "Polytechnische Oberschule" with `r poly`% below the values in ESS-2018. Lastly, men were over-represented in the present data with `r men`% above the value in ESS-2018. [! wait for Microcensus data here ! bcs it seems that men should actually be fewer than women, so ESS might have oversampled men]
+The present data diverged in several ways from representative surveys and therefore from what it is expected to be the demographic structure in the German general population when human values were most recently recorded in the refined-TBHV (also see the Appendix). Concerning age, the 30-40 years old group was the most over-represented in the present study with `r age3040`% over the value in the ESS-2018, which was followed by the 50-60 group with `r age5060`% and the 18-30 group with `r age1830`% respectively over the value in the ESS-2018. The age groups 60-70 (`r age6070`%) and 70+ (`r age70`%) were on the other hand underrepresented when compared to the same survey. Concerning education, there was over-representation of categories "Volks-/Hauptschule" and "Mittlere Reife" with `r hauptschule`% and `r mittlerreife`% respectively over the values in the ESS-2018. Underrepresented was the category "Polytechnische Oberschule" with `r poly`% below the values in ESS-2018. Lastly, men were over-represented in the present data with `r men`% above the value in ESS-2018. [! wait for Microcensus data here ! bcs it seems that men should actually be fewer than women, so ESS might have oversampled men]
 
-```{r t2}
+```{r t1}
 # [-4] because third column in the table is smaple size, and that need not eb preented in the table
 df_represent_hov_joined[-4] %>% knitr::kable(caption = "The four higher order value preferences in the present data and ESS-2018", format="pipe",digits=2) %>% 
   add_footnote(c("SEN = Self-enhancement, STR = Self-transcendence, OCH = Openness to change, CON = Conservation.",
@@ -248,9 +241,9 @@ m_strequiv = df_represent_hov_joined[7,5] %>% as.numeric() %>% round_df()
 m_stress = df_represent_hov_joined[8,5] %>% as.numeric() %>% round_df()
 ```
 
-Table \@ref(tab:t2) provides an overview of the four higher order value preferences in the present data and in the ESS-2018 (with a valid _n_ = `r nessvalues`). The present data matched the ESS-2018 descriptions along the openness to change - conservation dimension (CON, OCH) but not along the self-enhancement - self-transcendence dimension (SEN, STR). The preference for SEN was overall low in the present data (_M_ = `r m_senequiv`) compared to the ESS-2018 where it was very high (_M_ = `r m_seness`). Conversely, the preference for STR was overall moderate in the present data (_M_ = `r m_strequiv`) compared to the ESS-2018 where it was very low (_M_ = `r m_stress`). 
+Table \@ref(tab:t1) provides an overview of the four higher order value preferences in the present data and in the ESS-2018 (with a valid _n_ = `r nessvalues`). The present data matched the ESS-2018 descriptions along the openness to change - conservation dimension (CON, OCH) but not along the self-enhancement - self-transcendence dimension (SEN, STR). The preference for SEN was overall low in the present data (_M_ = `r m_senequiv`) compared to the ESS-2018 where it was very high (_M_ = `r m_seness`). Conversely, the preference for STR was overall moderate in the present data (_M_ = `r m_strequiv`) compared to the ESS-2018 where it was very low (_M_ = `r m_stress`). 
 
-Discrepancies between the surveys are not in all instances concerning given that the data is from a quota sample and not a country-representative one. Notwithstanding, the representativity of certain age categories needs to be acknowledged in discussing the effects of values on interest in cryptocurrencies in Germany.
+Discrepancies between the surveys are not always concerning given that the data is from a quota sample and not a country-representative one. Notwithstanding, the representativity of certain age categories needs to be acknowledged in discussing the effects of values on interest in cryptocurrencies in Germany.
 
 ## Gradient from intention to behavior
 
@@ -277,24 +270,52 @@ n_aware = gradient_descriptive[3,2] %>% as.numeric() %>% round_df()
 n_notaware = nstudy - n_aware  
 ```
 
-```{r t3}
-# alternative to the one below
-gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurrencies in the present sample",
-                                      format="pipe", digits = 2) %>% 
-  add_footnote("Awareness = 'If the study participant has previously heard of cryptocurrencies or digital currencies',
-               Holding = 'If the study participant currently holds or in the past has held cryptocurrencies or digital currencies',
-               Holding intention = 'If the study participant intends to hold cryptocurrencies or digital currencies in the future',
-               Holding intention if never held = the holding intention question asked only to those study participants who said they never held cryptocurrencies or digital currencies.")
-```
 
-Table \@ref(tab:t3) presents the sample decomposition after cryptocurreny awareness, holding behavior now, and two combinations of holding behavior in the future. It can be seen that, _n_ = `r n_notaware` (or `r perawarenot`%) of the total sample have never heard of cryptocurrencies. Among participants who previously heard of cryptocurrencies, `r perholdsnow`% held currently, `r perholdspast`% held in the past, while `r perholdsnever`% never held cryptocurrencies. Conversely, `r perintyes`% indicated they would like to hold cryptocurrencies in the future, while `r perintno`% said no and `r perintunsure`% were undecided. Finally, among participants who previously heard of cryptocurrencies but never held, there were `r pernever.intyes`% who said they would like to in the future, while `r pernever.intno`% said that they would not, and `r pernever.intunsure`% were unsure. These percentages are a first indication that the phenomenon of cryptocurrency should not be treated as negligible. 
+A detailed sample decomposition after cryptocurreny awareness, holding behavior now, and holding behavior in the future is available in the Appendix. It can be seen that, _n_ = `r n_notaware` (or `r perawarenot`%) of the total sample have never heard of cryptocurrencies. Among participants who previously heard of cryptocurrencies, `r perholdsnow`% held currently, `r perholdspast`% held in the past, while `r perholdsnever`% never held cryptocurrencies. Conversely, `r perintyes`% indicated they would like to hold cryptocurrencies in the future, while `r perintno`% said no and `r perintunsure`% were undecided. Finally, among participants who previously heard of cryptocurrencies but never held, there were `r pernever.intyes`% who said they would like to in the future, while `r pernever.intno`% said that they would not, and `r pernever.intunsure`% were unsure. These percentages are a first indication that the phenomenon of cryptocurrency should not be treated as negligible. 
 
 ### Reasons for behavior
 
+```{r reasons,fig.cap="Mentioned reasons for holding or not holding cryptocurrencies",fig.subcap=c("Holds now or held in the past","Doesn't hold and never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth"}
 
+theme1 <- theme(axis.text.x = element_text(angle = 75, vjust = 0.9, hjust=1),
+                 panel.background = element_rect(fill="white", color = "grey50"),
+                 panel.grid.major.y = element_line(color="grey90"),
+                 axis.title.y = element_text(vjust= 1, hjust=1, angle = 90)
+)
+
+plot.a + theme1
+plot.b + theme1
+```
+
+```{r}
+# - most frequent reasons for holding
+tempfor <- reasonsfor %>% filter(value==1) %>% arrange(prop)
+resmax1for = tempfor[10,1]
+max1for = tempfor[10,5] %>% as.numeric() %>% round_df()
+resmax2for = tempfor[9,1]
+max2for = tempfor[9,5] %>% as.numeric() %>% round_df()
+resmin1for = tempfor[1,1]
+min1for = tempfor[1,5] %>% as.numeric() %>% round_df()
+resmin2for =tempfor[2,1]
+min2for = tempfor[2,5] %>% as.numeric() %>% round_df()
+
+# - most frequent reasons for not holding
+tempno <- reasonsno %>% filter(value==1) %>% arrange(prop)
+resmax1no = tempno[9,1]
+max1no = tempno[9,5] %>% as.numeric() %>% round_df()
+resmax2no = tempno[8,1]
+max2no = tempno[8,5] %>% as.numeric() %>% round_df()
+resmin1no = tempno[1,1]
+min1no = tempno[1,5] %>% as.numeric() %>% round_df()
+resmin2no = tempno[2,1]
+min2no = tempno[2,5] %>% as.numeric() %>% round_df()
+```
+
+Figure \@ref(fig:reasons) display frequencies of named reasons for holding or not holding cryptocurrencies. Overall, there were _n_ = `r n_reasonsfor` participants who heard of cryptocurrencies and held now or in the past cryptocurrencies, whereas _n_ = `r n_reasonsno` participants heard of cryptocurrencies but never held. As it can be seen, the most frequently mentioned reason for ever holding cryptocurrencies was _`r resmax1for`_ (`r max1for`%), which was followed by _`r resmax2for`_ (`r max2for`%), whereas the least mentioned reason was _`r resmin1for`_ (`r min2for`%). Conversely, the most frequently mentioned reason for never holding was _`r resmax1no`_ (`r max1no`%), whereas the least mentioned reason was _`r resmin1no`_ (`r min1no`%). Perhaps unsurprisingly, it can be seen that information on the matter was central to participants' decision to hold or not to hold cryptocurrencies. 
 
 ### Role of values
 
+[input from Ranjit]
 
 ## Associations
 
@@ -308,3 +329,32 @@ Our sample was not representative to the German general population, but it used 
 # Conclusion
 
 # References
+
+
+<div id="refs"></div> <!---wichtig für Anlage Teil, sonst Literaturverzeichnis wird am Ende des Dokuments angehängt--->
+
+\newpage
+
+# Appendix
+
+## 1 Sample representativity
+
+```{r apend1}
+# sample representativity compared to microcensus (fehlt noch) and ess 2018
+dissim_prop %>% 
+  knitr::kable(caption = "Sample representativity after age, education, and gender compared to Microcenus 2020 and European Social Survey 2018",
+               format="pipe", digits = 2) %>%
+ add_footnote("Relative percentages from the sample indicated in column Data.")
+```
+
+## 2 Gradient from interest to behavior 
+
+```{r apend2}
+# alternative to the one below
+gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurrencies in the present sample",
+                                      format="pipe", digits = 2) %>% 
+  add_footnote("Awareness = 'If the study participant has previously heard of cryptocurrencies or digital currencies',
+               Holding = 'If the study participant currently holds or in the past has held cryptocurrencies or digital currencies',
+               Holding intention = 'If the study participant intends to hold cryptocurrencies or digital currencies in the future',
+               Holding intention if never held = the holding intention question asked only to those study participants who said they never held cryptocurrencies or digital currencies.")
+```
