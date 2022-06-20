@@ -253,3 +253,35 @@ cronbach_compute_ess_4hov <- function(data,na.rm=TRUE,CI=TRUE,B=100){
   
 }## closes function " cronbach_compute_ess_4hov"
 
+# ploting values function
+
+plot_values <- function(data, target_var){
+  data %>% 
+    mutate(crypto_var = get(target_var)) %>% 
+    drop_na(crypto_var) %>%
+    group_by(value_dim, crypto_var) %>% 
+    mutate(value_median = median(value_score),
+           value_mean = mean(value_score)) %>% 
+    ggplot(aes(value_score, color = crypto_var), stat = "unique")+
+    facet_grid(rows = vars(value_dim), switch = "both", scales = "free_y")+
+    #geom_vline(xintercept = 0)+
+    geom_hline(yintercept = 0, color = "grey")+
+    geom_vline(xintercept = 0)+
+    geom_density(size = 1)+
+    #geom_point(aes(value_mean, color=crypto_var, y =0), stat = "unique", size = 3, shape = 17)+
+    geom_text(aes(value_median, color=crypto_var, y =0), stat = "unique", size = 8, label = "|")+
+    #geom_vline(aes(xintercept = value_median, color = crypto_var, linetype = "median"),               size = 1)+
+    #geom_vline(aes(xintercept = value_mean, color = crypto_var, linetype = "mean"),       size = 1)+
+    #scale_color_viridis("", option = "turbo", discrete = T, begin = 0.2, end = 0.8)+
+    theme_minimal(base_size = 16)+
+    xlab("Value Scores")+
+    theme(
+      legend.position = "bottom",
+      legend.direction = "vertical",
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank(),
+      strip.text.y.left = element_text(angle = 0, hjust = 1),
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor.y = element_blank()
+    ) 
+}

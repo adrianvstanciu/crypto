@@ -96,6 +96,7 @@ load("data/pca.Rdata")
 load("data/gradient.Rdata")
 load("data/represent.Rdata")
 load("data/reasons.Rdata")
+load("data/plots.Rdata")
 
 # --- imports source scripts
 source("scripts/helper_functions.R")
@@ -324,6 +325,28 @@ Figure \@ref(fig:reasons) display frequencies of named reasons for holding or no
 ### Role of values
 
 [input from Ranjit]
+
+```{r p1, fig.cap="Awareness of and holding behavior of digital- and/or cryptocurrencies",fig.subcap=c("Awareness","Holding behavior now or in the past"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth"}
+# p1
+df_long %>% plot_values("krybws01")
+# p2
+df_long %>% 
+  filter(krybws01 == "Has heard")%>% 
+  plot_values("krybst01")
+```
+
+```{r p34, fig.cap="Intention to hold digital- and/or cryptocurrencies in the future", fig.subcap=c("Has heard and previously held","Has heard but never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth"}
+# p3
+df_long %>% 
+  filter(krybws01 == "Has heard")%>% 
+plot_values("krybsz01")
+# p4
+df_long %>% 
+  filter(krybws01 == "Has heard",
+         krybst01 == "Never held")%>% 
+plot_values("krybsz01")
+```
+
 
 ## Associations
 

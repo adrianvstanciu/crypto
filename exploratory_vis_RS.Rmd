@@ -111,7 +111,7 @@ Median: "\|"
 All participants
 
 ```{r fig.height=5}
-df_long %>% 
+p1<-df_long %>% 
 plot_values("krybws01")
 ```
 
@@ -132,7 +132,7 @@ Only those with awareness
 
 ```{r fig.height=5}
 
-df_long %>% 
+p2<-df_long %>% 
   filter(krybws01 == "Has heard of crypto currency")%>% 
   plot_values("krybst01")
 
@@ -161,7 +161,7 @@ df_long_z %>%
 *N* = 692; Only those with awareness
 
 ```{r fig.height=5}
-df_long %>% 
+p3<-df_long %>% 
   filter(krybws01 == "Has heard of crypto currency")%>% 
 plot_values("krybsz01")
 
@@ -185,7 +185,7 @@ plot_values("krybsz01")
 *N* = 576; Only with awareness but no previous holding
 
 ```{r fig.height=5}
-df_long %>% 
+p4<-df_long %>% 
   filter(krybws01 == "Has heard of crypto currency",
          krybst01 == "Never held crypto currency")%>% 
 plot_values("krybsz01")
@@ -204,3 +204,12 @@ df_long_z %>%
 plot_values("krybsz01")
 
 ```
+
+```{r}
+library(stringr)
+
+save(list=str_subset(ls(),"p$"),
+     file="data/plots.Rdata"
+     )
+```
+
