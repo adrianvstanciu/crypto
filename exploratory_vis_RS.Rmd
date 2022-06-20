@@ -13,9 +13,32 @@ library(viridis)
 load("data/df.Rdata")
 ```
 
+# English labels
 ```{r}
 
-df_long <- df_ipst %>% 
+df_ipst_relabeled <- df_ipst %>%
+  mutate(
+    krybws01 = krybws01 %>% as.numeric %>% recode_factor(
+      `1` = "Has heard of crypto currency",
+      `2` = "Has not heard of crypto currency"),
+    krybst01 = krybst01 %>% as.numeric %>% recode_factor(
+      `1` = "Currently holds crypto currency",
+      `2` = "Previously held crypto currency",
+      `3` = "Never held crypto currency"
+    ),
+    krybsz01 = krybsz01 %>% as.numeric %>%  recode_factor(
+      `1` = "Wants to hold crypto currency in the future",
+      `2` = "Does not want to hold crypto currency in the future",
+      `3` = "Uncertain"
+    )
+  )
+
+```
+
+
+```{r}
+
+df_long <- df_ipst_relabeled %>% 
   mutate(across(contains("kryb"), na_if, -77)) %>% 
   pivot_longer(cols = pvq_STR:pvq_OCH, names_to = "value_dim", values_to = "value_score") %>% 
   mutate(value_dim = factor(value_dim,
@@ -27,7 +50,7 @@ df_long <- df_ipst %>%
                               "Conservation"
                             ))) 
 
-df_long_z <- df_ipst %>% 
+df_long_z <- df_ipst_relabeled %>% 
   mutate(across(contains("kryb"), na_if, -77)) %>% 
   mutate(across(pvq_STR:pvq_OCH, scale)) %>% 
   pivot_longer(cols = pvq_STR:pvq_OCH, names_to = "value_dim", values_to = "value_score") %>% 
@@ -44,7 +67,7 @@ df_long_z <- df_ipst %>%
 
 plot_values <- function(data, target_var){
   data %>% 
-    mutate(crypto_var = as_factor(get(target_var))) %>% 
+    mutate(crypto_var = get(target_var)) %>% 
     drop_na(crypto_var) %>%
     group_by(value_dim, crypto_var) %>% 
     mutate(value_median = median(value_score),
@@ -110,7 +133,7 @@ Only those with awareness
 ```{r fig.height=5}
 
 df_long %>% 
-  filter(krybws01 == 1)%>% 
+  filter(krybws01 == "Has heard of crypto currency")%>% 
   plot_values("krybst01")
 
 
@@ -124,7 +147,7 @@ Only those with awareness
 ```{r fig.height=5}
 
 df_long_z %>% 
-  filter(krybws01 == 1)%>% 
+  filter(krybws01 == "Has heard of crypto currency")%>% 
   plot_values("krybst01")
 
 
@@ -139,7 +162,7 @@ df_long_z %>%
 
 ```{r fig.height=5}
 df_long %>% 
-  filter(krybws01 == 1)%>% 
+  filter(krybws01 == "Has heard of crypto currency")%>% 
 plot_values("krybsz01")
 
 ```
@@ -150,7 +173,7 @@ plot_values("krybsz01")
 
 ```{r fig.height=5}
 df_long_z %>% 
-  filter(krybws01 == 1)%>% 
+  filter(krybws01 == "Has heard of crypto currency")%>% 
 plot_values("krybsz01")
 
 ```
@@ -163,7 +186,8 @@ plot_values("krybsz01")
 
 ```{r fig.height=5}
 df_long %>% 
-  filter(krybws01 == 1, krybst01 == 3)%>% 
+  filter(krybws01 == "Has heard of crypto currency",
+         krybst01 == "Never held crypto currency")%>% 
 plot_values("krybsz01")
 
 ```
@@ -175,7 +199,8 @@ plot_values("krybsz01")
 
 ```{r fig.height=5}
 df_long_z %>% 
-  filter(krybws01 == 1, krybst01 == 3)%>% 
+  filter(krybws01 == "Has heard of crypto currency",
+         krybst01 == "Never held crypto currency")%>% 
 plot_values("krybsz01")
 
 ```
