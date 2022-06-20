@@ -209,7 +209,7 @@ Finally, we explored associations between human values and beliefs that people a
 
 Per outcome variable (behavior or intention), we estimated two models, one each for the openness to change vs. conservation and the self-transcendence vs. self-enhancement value dimensions. We chose to do this to avoid multicoliniarity and to gain an understanding as to which of the incompatible value typologies was a "better" predictor. A third reason for applying this strategy was to minimize the impact due to low sample sizes on the estimation algorithm and therefore on variance estimation error.
 
-In each model-instance we first estimated the empty model ($\beta_{0}$), then included three typical covariates ($\beta_{1:3}$ = age, gender (women = 1, other = 0), and education (Abitur = 1, other = 0)), and in a third step value preferences ($\beta_{4}$ = OCH/STR, $\beta_{5}$ = CON/SEN) and the five beliefs on cryptocurrencies ($\beta_{6:10}$ = investment opportunity, money exchange opportunity, state regulated, illegal commerce, and good time to buy). In a final step, we introduced the moderating effect of beliefs onto the effects of values on outcome variables ($\beta_{16:20}$).
+In each model-instance we first estimated the model with three typical covariates ($\beta_{1:3}$ = age, gender (women = 1, other = 0), and education (Abitur = 1, other = 0)) then included value preferences ($\beta_{4}$ = OCH/STR, $\beta_{5}$ = CON/SEN) and the five beliefs on cryptocurrencies ($\beta_{6:10}$ = investment opportunity, money exchange opportunity, state regulated, illegal commerce, and good time to buy). In a final step, we introduced the moderating effect of beliefs onto the effects of values on outcome variables ($\beta_{16:20}$).
 
 # Results
 
