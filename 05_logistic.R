@@ -88,7 +88,7 @@ meth[c("krybst01","krybsz01","age","female","abitur","pvq_OCH","pvq_CON","pvq_ST
 impData <- mice::mice(shortData, m=5,maxit=10,printFlag = TRUE,pred=pred,meth=meth,seed=1244)
 Datim <- mice::complete(impData,"long",include=TRUE)
 # - writes imputed data on the machine
-write.table(Datim,"data/imputeddata.txt",sep="\t",dec=",",row.names=FALSE)
+#write.table(Datim,"data/imputeddata.txt",sep="\t",dec=",",row.names=FALSE)
 
 # ---- lostic regression
 # --- model 1: intercept + covariates(female,abitur, age)
@@ -171,6 +171,118 @@ m4b.2 <- with(impData,glm(krybsz01 ~ age + female + abitur + pvq_CON + pvq_STR +
 t4a.2<-summary(mice::pool(m4a.2)) %>% as.data.frame()
 t4b.2<-summary(mice::pool(m4b.2)) %>% as.data.frame()
 
+### creates table with results
+
+res_hyp_cryptonow<-tribble(
+    ~Predictor,   ~b_m1,  ~Test_m1,   ~Df_m1,    ~p_m1,     ~b_m2,   ~Test_m2,   ~Df_m2,   ~p_m2,      ~b_m3,   ~Test_m3,    ~Df_m3,   ~p_m3,
+  "Intercept",t1.1[1,2],t1.1[1,4],t1.1[1,5],t1.1[1,6],t2a.1[1,2],t2a.1[1,4],t2a.1[1,5],t2a.1[1,6],t3a.1[1,2],t3a.1[1,4],t3a.1[1,5],t3a.1[1,6],
+  "Age",        t1.1[2,2],t1.1[2,4],t1.1[2,5],t1.1[2,6],t2a.1[2,2],t2a.1[2,4],t2a.1[2,5],t2a.1[2,6],t3a.1[2,2],t3a.1[2,4],t3a.1[2,5],t3a.1[2,6],
+  "Female",     t1.1[3,2],t1.1[3,4],t1.1[3,5],t1.1[3,6],t2a.1[3,2],t2a.1[3,4],t2a.1[3,5],t2a.1[3,6],t3a.1[3,2],t3a.1[3,4],t3a.1[3,5],t3a.1[3,6],
+  "Abitur",     t1.1[4,2],t1.1[4,4],t1.1[4,5],t1.1[4,6],t2a.1[4,2],t2a.1[4,4],t2a.1[4,5],t2a.1[4,6],t3a.1[4,2],t3a.1[4,4],t3a.1[4,5],t3a.1[4,6],
+  "OCH",            NaN,        NaN,       NaN,       NaN,t2a.1[5,2],t2a.1[5,4],t2a.1[5,5],t2a.1[5,6],t3a.1[5,2],t3a.1[5,4],t3a.1[5,5],t3a.1[5,6],
+  "SEN",            NaN,        NaN,       NaN,       NaN,t2a.1[6,2],t2a.1[6,4],t2a.1[6,5],t2a.1[6,6],t3a.1[6,2],t3a.1[6,4],t3a.1[6,5],t3a.1[6,6],
+  "Investment",     NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.1[7,2],t3a.1[7,4],t3a.1[7,5],t3a.1[7,6],
+  "Exchange",       NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.1[8,2],t3a.1[8,4],t3a.1[8,5],t3a.1[8,6],
+  "Regularization", NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.1[9,2],t3a.1[9,4],t3a.1[9,5],t3a.1[9,6],
+  "Illegal",        NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.1[10,2],t3a.1[10,4],t3a.1[10,5],t3a.1[10,6],
+  "Good time",      NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.1[11,2],t3a.1[11,4],t3a.1[11,5],t3a.1[11,6]
+)
+res_nohyp_cryptonow<-tribble(
+  ~Predictor,   ~b_m1,  ~Test_m1,   ~Df_m1,    ~p_m1,     ~b_m2,   ~Test_m2,   ~Df_m2,   ~p_m2,      ~b_m3,   ~Test_m3,    ~Df_m3,   ~p_m3,
+  "Intercept",t1.1[1,2],t1.1[1,4],t1.1[1,5],t1.1[1,6],t2b.1[1,2],t2b.1[1,4],t2b.1[1,5],t2b.1[1,6],t3b.1[1,2],t3b.1[1,4],t3b.1[1,5],t3b.1[1,6],
+  "Age",        t1.1[2,2],t1.1[2,4],t1.1[2,5],t1.1[2,6],t2b.1[2,2],t2b.1[2,4],t2b.1[2,5],t2b.1[2,6],t3b.1[2,2],t3b.1[2,4],t3b.1[2,5],t3b.1[2,6],
+  "Female",     t1.1[3,2],t1.1[3,4],t1.1[3,5],t1.1[3,6],t2b.1[3,2],t2b.1[3,4],t2b.1[3,5],t2b.1[3,6],t3b.1[3,2],t3b.1[3,4],t3b.1[3,5],t3b.1[3,6],
+  "Abitur",     t1.1[4,2],t1.1[4,4],t1.1[4,5],t1.1[4,6],t2b.1[4,2],t2b.1[4,4],t2b.1[4,5],t2b.1[4,6],t3b.1[4,2],t3b.1[4,4],t3b.1[4,5],t3b.1[4,6],
+  "CON",            NaN,        NaN,       NaN,       NaN,t2b.1[5,2],t2b.1[5,4],t2b.1[5,5],t2b.1[5,6],t3b.1[5,2],t3b.1[5,4],t3b.1[5,5],t3b.1[5,6],
+  "STR",            NaN,        NaN,       NaN,       NaN,t2b.1[6,2],t2b.1[6,4],t2b.1[6,5],t2b.1[6,6],t3b.1[6,2],t3b.1[6,4],t3b.1[6,5],t3b.1[6,6],
+  "Investment",     NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.1[7,2],t3b.1[7,4],t3b.1[7,5],t3b.1[7,6],
+  "Exchange",       NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.1[8,2],t3b.1[8,4],t3b.1[8,5],t3b.1[8,6],
+  "Regularization", NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.1[9,2],t3b.1[9,4],t3b.1[9,5],t3b.1[9,6],
+  "Illegal",        NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.1[10,2],t3b.1[10,4],t3b.1[10,5],t3b.1[10,6],
+  "Good time",      NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.1[11,2],t3b.1[11,4],t3b.1[11,5],t3b.1[11,6]
+)
+res_hyp_cryptofutr<-tribble(
+  ~Predictor,   ~b_m1,  ~Test_m1,   ~Df_m1,    ~p_m1,     ~b_m2,   ~Test_m2,   ~Df_m2,   ~p_m2,      ~b_m3,   ~Test_m3,    ~Df_m3,   ~p_m3,
+  "Intercept",t1.2[1,2],t1.2[1,4],t1.2[1,5],t1.2[1,6],t2a.2[1,2],t2a.2[1,4],t2a.2[1,5],t2a.2[1,6],t3a.2[1,2],t3a.2[1,4],t3a.2[1,5],t3a.2[1,6],
+  "Age",        t1.2[2,2],t1.2[2,4],t1.2[2,5],t1.2[2,6],t2a.2[2,2],t2a.2[2,4],t2a.2[2,5],t2a.2[2,6],t3a.2[2,2],t3a.2[2,4],t3a.2[2,5],t3a.2[2,6],
+  "Female",     t1.2[3,2],t1.2[3,4],t1.2[3,5],t1.2[3,6],t2a.2[3,2],t2a.2[3,4],t2a.2[3,5],t2a.2[3,6],t3a.2[3,2],t3a.2[3,4],t3a.2[3,5],t3a.2[3,6],
+  "Abitur",     t1.2[4,2],t1.2[4,4],t1.2[4,5],t1.2[4,6],t2a.2[4,2],t2a.2[4,4],t2a.2[4,5],t2a.2[4,6],t3a.2[4,2],t3a.2[4,4],t3a.2[4,5],t3a.2[4,6],
+  "OCH",            NaN,        NaN,       NaN,       NaN,t2a.2[5,2],t2a.2[5,4],t2a.2[5,5],t2a.2[5,6],t3a.2[5,2],t3a.2[5,4],t3a.2[5,5],t3a.2[5,6],
+  "SEN",            NaN,        NaN,       NaN,       NaN,t2a.2[6,2],t2a.2[6,4],t2a.2[6,5],t2a.2[6,6],t3a.2[6,2],t3a.2[6,4],t3a.2[6,5],t3a.2[6,6],
+  "Investment",     NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.2[7,2],t3a.2[7,4],t3a.2[7,5],t3a.2[7,6],
+  "Exchange",       NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.2[8,2],t3a.2[8,4],t3a.2[8,5],t3a.2[8,6],
+  "Regularization", NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.2[9,2],t3a.2[9,4],t3a.2[9,5],t3a.2[9,6],
+  "Illegal",        NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.2[10,2],t3a.2[10,4],t3a.2[10,5],t3a.2[10,6],
+  "Good time",      NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3a.2[11,2],t3a.2[11,4],t3a.2[11,5],t3a.2[11,6]
+)
+res_nohyp_cryptofutr<-tribble(
+  ~Predictor,   ~b_m1,  ~Test_m1,   ~Df_m1,    ~p_m1,     ~b_m2,   ~Test_m2,   ~Df_m2,   ~p_m2,      ~b_m3,   ~Test_m3,    ~Df_m3,   ~p_m3,
+  "Intercept",t1.2[1,2],t1.2[1,4],t1.2[1,5],t1.2[1,6],t2b.2[1,2],t2b.2[1,4],t2b.2[1,5],t2b.2[1,6],t3b.2[1,2],t3b.2[1,4],t3b.2[1,5],t3b.2[1,6],
+  "Age",        t1.2[2,2],t1.2[2,4],t1.2[2,5],t1.2[2,6],t2b.2[2,2],t2b.2[2,4],t2b.2[2,5],t2b.2[2,6],t3b.2[2,2],t3b.2[2,4],t3b.2[2,5],t3b.2[2,6],
+  "Female",     t1.2[3,2],t1.2[3,4],t1.2[3,5],t1.2[3,6],t2b.2[3,2],t2b.2[3,4],t2b.2[3,5],t2b.2[3,6],t3b.2[3,2],t3b.2[3,4],t3b.2[3,5],t3b.2[3,6],
+  "Abitur",     t1.2[4,2],t1.2[4,4],t1.2[4,5],t1.2[4,6],t2b.2[4,2],t2b.2[4,4],t2b.2[4,5],t2b.2[4,6],t3b.2[4,2],t3b.2[4,4],t3b.2[4,5],t3b.2[4,6],
+  "CON",            NaN,        NaN,       NaN,       NaN,t2b.2[5,2],t2b.2[5,4],t2b.2[5,5],t2b.2[5,6],t3b.2[5,2],t3b.2[5,4],t3b.2[5,5],t3b.2[5,6],
+  "STR",            NaN,        NaN,       NaN,       NaN,t2b.2[6,2],t2b.2[6,4],t2b.2[6,5],t2b.2[6,6],t3b.2[6,2],t3b.2[6,4],t3b.2[6,5],t3b.2[6,6],
+  "Investment",     NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.2[7,2],t3b.2[7,4],t3b.2[7,5],t3b.2[7,6],
+  "Exchange",       NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.2[8,2],t3b.2[8,4],t3b.2[8,5],t3b.2[8,6],
+  "Regularization", NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.2[9,2],t3b.2[9,4],t3b.2[9,5],t3b.2[9,6],
+  "Illegal",        NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.2[10,2],t3b.2[10,4],t3b.2[10,5],t3b.2[10,6],
+  "Good time",      NaN,        NaN,       NaN,       NaN,        NaN,        NaN,        NaN,        NaN,t3b.2[11,2],t3b.2[11,4],t3b.2[11,5],t3b.2[11,6]
+)
+
+## compared nested models using mice:: package D3 (calculates likelihood ratio test)
+# to see if the fuller model (model with more predictors) is fitting the data better
+
+# crypto now
+c1<-mice::D3(m2a.1,m1.1)
+c2<-mice::D3(m2b.1,m1.1)
+c3<-mice::D3(m3a.1,m2a.1)
+c4<-mice::D3(m3b.1,m2b.1)
+c9<-mice::D3(m4a.1,m3a.1)
+c10<-mice::D3(m4b.1,m3b.1)
+
+a<-summary(c1)[2] %>% as.data.frame() %>% add_column("Comparison"="m2a.1 ~ m1.1")
+b<-summary(c2)[2] %>% as.data.frame() %>% add_column("Comparison"="m2b.1 ~ m1.1")
+c<-summary(c3)[2] %>% as.data.frame() %>% add_column("Comparison"="m3a.1 ~ m2a.1")
+d<-summary(c4)[2] %>% as.data.frame() %>% add_column("Comparison"="m3b.1 ~ m2b.1")
+i<-summary(c9)[2] %>% as.data.frame() %>% add_column("Comparison"="m4a.1 ~ m3a.1")
+j<-summary(c10)[2] %>% as.data.frame() %>% add_column("Comparison"="m4b.1 ~ m3b.1")
+
+cnow <- full_join(a,b) %>% full_join(.,c) %>% full_join(.,d) %>% full_join(.,i) %>% full_join(.,j) %>% 
+  rename(Test=comparisons.statistic,
+         Df1=comparisons.df1,
+         Df2=comparisons.df2,
+         "Df comparison"=comparisons.dfcom,
+         p=comparisons.p.value,
+         Riv=comparisons.riv) %>% 
+  dplyr::select(-comparisons.test) %>% 
+  relocate("Comparison", .before=Test)
+
+# intention crypto future
+c5<-mice::D3(m2a.2,m1.2)
+c6<-mice::D3(m2b.2,m1.2)
+c7<-mice::D3(m3a.2,m2a.2)
+c8<-mice::D3(m3b.2,m2b.2)
+c11<-mice::D3(m4a.2,m3a.2)
+c12<-mice::D3(m4b.2,m3b.2)
+
+e<-summary(c5)[2] %>% as.data.frame() %>% add_column("Comparison"="m2a.2 ~ m1.2")
+f<-summary(c6)[2] %>% as.data.frame() %>% add_column("Comparison"="m2b.2 ~ m1.2")
+g<-summary(c7)[2] %>% as.data.frame() %>% add_column("Comparison"="m3a.2 ~ m2a.2")
+h<-summary(c8)[2] %>% as.data.frame() %>% add_column("Comparison"="m3b.2 ~ m2b.2")
+k<-summary(c11)[2] %>% as.data.frame() %>% add_column("Comparison"="m4a.2 ~ m3a.2")
+l<-summary(c12)[2] %>% as.data.frame() %>% add_column("Comparison"="m4b.2 ~ m3b.2")
+
+cfutr <- full_join(e,f) %>% full_join(.,g) %>% full_join(.,h) %>% full_join(.,k) %>% full_join(.,l) %>% 
+  rename(Test=comparisons.statistic,
+         Df1=comparisons.df1,
+         Df2=comparisons.df2,
+         "Df comparison"=comparisons.dfcom,
+         p=comparisons.p.value,
+         Riv=comparisons.riv) %>% 
+  dplyr::select(-comparisons.test) %>% 
+  relocate("Comparison", .before=Test)
+
 # checked all t4 tables if any interaction term was significant
 # interaction effects in either of the four models were significant
 # thus for the paper will be reported models 3 (main effects only)
@@ -220,11 +332,65 @@ x3b.2<-mice::pool(m3b.2)$glanced[1,] %>%
   add_column(model="m3b.2",.before="null.deviance") %>% 
   add_column(outcome="Crypto future",.after="model") %>% 
   add_column(value="CON & STR", .after="outcome")
+# interaction effects added
+x4a.1<-mice::pool(m4a.1)$glanced[1,] %>% 
+  add_column(model="m4a.1",.before="null.deviance") %>% 
+  add_column(outcome="Crypto hold",.after="model") %>% 
+  add_column(value="OCH & SEN", .after="outcome")
+x4b.1<-mice::pool(m4b.1)$glanced[1,] %>% 
+  add_column(model="m4b.1",.before="null.deviance") %>% 
+  add_column(outcome="Crypto hold",.after="model") %>% 
+  add_column(value="CON & STR", .after="outcome")
+x4a.2<-mice::pool(m4a.2)$glanced[1,] %>% 
+  add_column(model="m4a.2",.before="null.deviance") %>% 
+  add_column(outcome="Crypto future",.after="model") %>% 
+  add_column(value="OCH & SEN", .after="outcome")
+x4b.2<-mice::pool(m4b.2)$glanced[1,] %>% 
+  add_column(model="m4b.1",.before="null.deviance") %>% 
+  add_column(outcome="Crypto future",.after="model") %>% 
+  add_column(value="CON & STR", .after="outcome")
 
-mfit_cryptonow <- full_join(x1.1,x2a.1) %>% full_join(.,x2b.1) %>% full_join(.,x3a.1) %>% full_join(.,x3b.1)
-mfit_cryptofutr <- full_join(x1.2,x2a.2) %>% full_join(.,x2b.2) %>% full_join(.,x3a.2) %>% full_join(.,x3b.2)  
+
+mfit_cryptonow <- full_join(x1.1,x2a.1) %>% full_join(.,x2b.1) %>% full_join(.,x3a.1) %>% full_join(.,x3b.1) %>% 
+  full_join(.,x4a.1) %>% full_join(.,x4b.1)
+mfit_cryptofutr <- full_join(x1.2,x2a.2) %>% full_join(.,x2b.2) %>% full_join(.,x3a.2) %>% full_join(.,x3b.2) %>% 
+  full_join(.,x4a.2) %>% full_join(.,x4b.2) 
+
+# creates nicer tables
+
+mfit_cryptonow <- mfit_cryptonow %>% 
+  rename(Model=model,
+         Outcome=outcome,
+         Values=value,
+         "Deviance (null)"=null.deviance,
+         "Df (null)"=df.null,
+         LogLik=logLik,
+         AIC=AIC,
+         BIC=BIC,
+         Deviance=deviance,
+         Df = df.residual,
+          N = nobs
+         ) %>% 
+  dplyr::select(-Outcome) %>% 
+  relocate(N, .after=Model)
+
+mfit_cryptofutr <- mfit_cryptofutr %>% 
+  rename(Model=model,
+         Outcome=outcome,
+         Values=value,
+         "Deviance (null)"=null.deviance,
+         "Df (null)"=df.null,
+         LogLik=logLik,
+         AIC=AIC,
+         BIC=BIC,
+         Deviance=deviance,
+         Df = df.residual,
+         N = nobs
+  ) %>% 
+  dplyr::select(-Outcome) %>% 
+  relocate(N, .after=Model)
 
 # --- save
-save(list=c(str_subset(ls(),"t$"),
-            str_subset(ls(),"mfit$")),
+save(list=c("tbl_corr","mfit_cryptonow","mfit_cryptofutr","cnow","cfutr",
+            "res_hyp_cryptonow","res_nohyp_cryptonow","res_hyp_cryptofutr","res_nohyp_cryptofutr"),
      file="data/table_logreg.Rdata")

@@ -97,15 +97,16 @@ load("data/gradient.Rdata")
 load("data/represent.Rdata")
 load("data/reasons.Rdata")
 load("data/plots.Rdata")
+load("data/table_logreg.Rdata")
 
 # --- imports source scripts
 source("scripts/helper_functions.R")
 
 # --- theme for plots
-mytheme <- theme(axis.text.x = element_text(angle = 45, vjust = 0.9, hjust=1, size = 10),
+mytheme <- theme(axis.text.x = element_text(angle = 45, vjust = 0.9, hjust=1, size = 14),
                  panel.background = element_rect(fill="white", color = "grey50"),
                  panel.grid.major.y = element_line(color="grey90"),
-                 axis.title.y = element_text(vjust= 0.5, hjust=1, angle = 90) )
+                 axis.title.y = element_text(vjust= 0.5, hjust=1, angle = 90,size=14))
 
 ```
 
@@ -284,12 +285,12 @@ A detailed sample decomposition after cryptocurreny awareness, holding behavior 
 
 ### Reasons for behavior
 
-```{r reasons,fig.cap="Mentioned reasons for holding or not holding cryptocurrencies",fig.subcap=c("Holds now or held in the past","Doesn't hold and never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth"}
+```{r reasons,fig.cap="Mentioned reasons for holding or not holding cryptocurrencies",fig.subcap=c("Holds now or held in the past","Doesn't hold and never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
 
-theme1 <- theme(axis.text.x = element_text(angle = 75, vjust = 0.9, hjust=1),
+theme1 <- theme(axis.text.x = element_text(angle = 75, vjust = 0.9, hjust=1,size=14),
                  panel.background = element_rect(fill="white", color = "grey50"),
                  panel.grid.major.y = element_line(color="grey90"),
-                 axis.title.y = element_text(vjust= 1, hjust=1, angle = 90)
+                 axis.title.y = element_text(vjust= 1, hjust=1, angle = 90,size=14)
 )
 
 plot.a + theme1
@@ -324,9 +325,7 @@ Figure \@ref(fig:reasons) display frequencies of named reasons for holding or no
 
 ### Role of values
 
-[input from Ranjit]
-
-```{r p1, fig.cap="Awareness of and holding behavior of digital- and/or cryptocurrencies",fig.subcap=c("Awareness","Holding behavior now or in the past"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth"}
+```{r p12, fig.cap="Awareness of and holding behavior of digital- and/or cryptocurrencies",fig.subcap=c("Awareness","Holding behavior now or in the past"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
 # p1
 df_long %>% plot_values("krybws01")
 # p2
@@ -335,7 +334,9 @@ df_long %>%
   plot_values("krybst01")
 ```
 
-```{r p34, fig.cap="Intention to hold digital- and/or cryptocurrencies in the future", fig.subcap=c("Has heard and previously held","Has heard but never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth"}
+Figure \@ref(fig:p12) depicts the distribution of each value preference for (a) people who have heard or haven't heard of digital- and/or cryptocurrencies as well as for (b) people who at the time of data collection have heard of digital- and/or cryptocurrencies and were holding, previously held, or never held such currencies.  
+
+```{r p34, fig.cap="Intention to hold digital- and/or cryptocurrencies in the future", fig.subcap=c("Has heard and previously held","Has heard but never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
 # p3
 df_long %>% 
   filter(krybws01 == "Has heard")%>% 
@@ -347,9 +348,45 @@ df_long %>%
 plot_values("krybsz01")
 ```
 
+Figure \@ref(fig:p34) shows...
 
-## Associations
+## Logistic regressions
 
+\newpage
+\blandscape <!---for landscape pages--->
+
+```{r t2}
+options(knitr.kable.NA = "")
+
+res_hyp_cryptonow %>% knitr::kable(caption="Results for logistic regression carried out according to the hypothesized effects on holding cryptocurrencies behavior", format="pipe",digits = 2) %>% 
+  add_footnote(c("Outcome variable was coded 1 = currently holds or in the past held, 0 = never held",
+                 "OCH = openness to change, SEN = self-enhancement",
+                 "Model estimations based on data pooled from 5 iterations of missing value imputation",
+                 "Suffixes m1, m2, and m3 stand for estimated models",
+                 "p = p value",
+                 "Test = test statistic",
+                 "b = regression beta coefficient",
+                 "Df = degrees of freedom"))
+```
+
+\newpage
+
+```{r t3}
+options(knitr.kable.NA = "")
+
+res_hyp_cryptofutr %>% knitr::kable(caption="Results for logistic regression carried out according to the hypothesized effects on intention to hold cryptocurrencies", format="pipe",digits = 2) %>% 
+  add_footnote(c("Outcome variable was coded 1 = would like to hold, 0 = would not want to hold or unsure",
+                 "OCH = openness to change, SEN = self-enhancement",
+                 "Model estimations based on data pooled from 5 iterations of missing value imputation",
+                 "Suffixes m1, m2, and m3 stand for estimated models",
+                 "p = p value",
+                 "Test = test statistic",
+                 "b = regression beta coefficient",
+                 "Df = degrees of freedom"))
+```
+
+
+\elandscape <!---closes landscape pages--->
 
 # Discussion
 
@@ -365,6 +402,7 @@ Our sample was not representative to the German general population, but it used 
 <div id="refs"></div> <!---wichtig für Anlage Teil, sonst Literaturverzeichnis wird am Ende des Dokuments angehängt--->
 
 \newpage
+\blandscape <!---for landscape pages--->
 
 # Appendix
 
@@ -389,3 +427,37 @@ gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurren
                Holding intention = 'If the study participant intends to hold cryptocurrencies or digital currencies in the future',
                Holding intention if never held = the holding intention question asked only to those study participants who said they never held cryptocurrencies or digital currencies.")
 ```
+
+## 3 Model fit indices
+
+```{r}
+mfit_cryptonow %>% knitr::kable(caption = "Model fit indices for logistic regression on holding cryptocurrencies behavior",
+                                format="pipe",digits=2) %>% 
+  add_footnote(c("LogLik = Loglikelihood",
+                 "Fit indices calculated on data pooled from 5 iterations of missing values imputation"))
+```
+
+```{r}
+mfit_cryptofutr %>% knitr::kable(caption = "Model fit indices for logistic regression on intention to hold cryptocurrencies in the future",
+                                format="pipe",digits=2) %>% 
+  add_footnote(c("LogLik = Loglikelihood",
+                 "Fit indices calculated on data pooled from 5 iterations of missing values imputation"))
+```
+
+## 4 Nested model comparison
+
+```{r}
+cnow %>% knitr::kable(caption="Nested model comparisons for holding cryptocurrencies behavior", format="pipe",digits = 2) %>% 
+  add_footnote(c("Loglikelihood based comparison",
+                 "Model comparison based on data pooled from 5 iterations of missing values imputation",
+                 "Column p contains p-values associated with the likelihood comparison test. Non-significant values indicate nested models that are not better fitted."))
+```
+
+```{r}
+cfutr %>% knitr::kable(caption="Nested model comparisons for intention to hold cryptocurrencies in the future", format="pipe",digits = 2) %>% 
+  add_footnote(c("Loglikelihood based comparison",
+                 "Model comparison based on data pooled from 5 iterations of missing values imputation",
+                 "Column p contains p-values associated with the likelihood comparison test. Non-significant values indicate nested models that are not better fitted."))
+```
+
+\elandscape

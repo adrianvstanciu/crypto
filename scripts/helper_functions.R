@@ -274,7 +274,7 @@ plot_values <- function(data, target_var){
     #geom_vline(aes(xintercept = value_mean, color = crypto_var, linetype = "mean"),       size = 1)+
     #scale_color_viridis("", option = "turbo", discrete = T, begin = 0.2, end = 0.8)+
     theme_minimal(base_size = 16)+
-    xlab("Value Scores")+
+    xlab("Ipsatized value scores")+
     theme(
       legend.position = "bottom",
       legend.direction = "vertical",

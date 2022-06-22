@@ -4,12 +4,25 @@
 library(dplyr)
 library(tidyverse)
 
+load("data/table_logreg.Rdata")
+
 # - empty table to later populate
-logistic_table <- tibble(
-  Model = vector("character",0),
-  "Optimal cut-off" = vector("numeric",0),
-  "Misclassification error" = vector("numeric",0),
-  "Concordance" = vector("numeric",0),
-  "Sensitivity" = vector("numeric",0),
-  "Specificity" = vector("numeric",0)
+
+res_cryptonow <- tibble(
+  What =vector("character",0),
+  Intercept=vector("numeric",0),
+  Age=vector("numeric",0),
+  Female=vector("numeric",0),
+  Abitur=vector("numeric",0),
+  OCH=vector("numeric",0),
+  CON=vector("numeric",0),
+  Investment=vector("numeric",0),
+  Exchange=vector("numeric",0),
+  Regularization=vector("numeric",0),
+  Illegal=vector("numeric",0),
+  "Good time"=vector("numeric",0),
+)
+
+res <- tibble(
+  Predictor=c()
 )
