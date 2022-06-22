@@ -391,6 +391,6 @@ mfit_cryptofutr <- mfit_cryptofutr %>%
   relocate(N, .after=Model)
 
 # --- save
-save(list=c("tbl_corr","mfit_cryptonow","mfit_cryptofutr","cnow","cfutr",
+save(list=c("impData","tbl_corr","mfit_cryptonow","mfit_cryptofutr","cnow","cfutr",
             "res_hyp_cryptonow","res_nohyp_cryptonow","res_hyp_cryptofutr","res_nohyp_cryptofutr"),
      file="data/table_logreg.Rdata")
