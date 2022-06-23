@@ -334,8 +334,6 @@ df_long %>%
   plot_values("krybst01")
 ```
 
-Figure \@ref(fig:p12) depicts the distribution of each value preference for (a) people who have heard or haven't heard of digital- and/or cryptocurrencies as well as for (b) people who at the time of data collection have heard of digital- and/or cryptocurrencies and were holding, previously held, or never held such currencies.  
-
 ```{r p34, fig.cap="Intention to hold digital- and/or cryptocurrencies in the future", fig.subcap=c("Has heard and previously held","Has heard but never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
 # p3
 df_long %>% 
@@ -348,7 +346,9 @@ df_long %>%
 plot_values("krybsz01")
 ```
 
-Figure \@ref(fig:p34) shows...
+Figures \@ref(fig:p12) and \@ref(fig:p34) depict density distributions of value preferences. Value preferences are not making a difference between people in view of whether they have heard of cryptocurrencies or not. Nonetheless, values of self-transcendence are generally highly preferred both among people who have heard and haven't heard of cryptocurrencies, whereas values of self-enhancement are generally less preferred in both groups. We also note that density plots for self-enhancement and self-transcendence are different both in shape and central tendency (median displayed) between people who currently hold, previously held, or never held cryptocurrencies. Furthermore, values of self-enhancement and of self-transcendence are most visibly divergent between people who want to hold, do not want to hold, or are unsure about holding cryptocurrencies in the future. The fact that the density plots of these values are most visibly diverging suggests a robust finding, namely that the content incompatibility between the two had an effect on people's decision to, at some point in the past or future, acquire such assets as cryptocurrencies.
+
+The following section is dedicated to exploring the associations between value preferences and behavior and intention in view of cryptocurrencies, while effects due to demographics and beliefs associated with cryptocurrencies is accounted for as well. 
 
 ## Logistic regressions
 
@@ -385,8 +385,9 @@ res_hyp_cryptofutr %>% knitr::kable(caption="Results for logistic regression car
                  "Df = degrees of freedom"))
 ```
 
-
 \elandscape <!---closes landscape pages--->
+
+
 
 # Discussion
 
