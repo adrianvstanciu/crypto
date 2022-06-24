@@ -130,7 +130,7 @@ The theory organizes value types according to incompatibilities between underlyi
 
 ## The present research
 
-Why should it matter if values inform people's interst in cryptocurrencies? What makes values ultimately relevant is that they are culture-informed, have a developmental trajectory that is lifelong [refer here manuscript by Smallenbroek, Stanciu et al], while they can change due to specific life events such as entering parenthood [@Lonnqvistetal2018], but also due to drastic changes in society such as due to the Covid-19 Pandemic [@Danieletal2022]. Cryptocurrencies hold several similarities with other technological advancements such as the Internet and mobile phones. Compared to previous advancements however, the notion of cryptocurrencies is also in a way an economic and a political statement [Mariana = do you have a citation for this?]. Though this technology is still in its onset, there are reasons to expect that it will impact people's financial awareness and potentially people's dependencies on established monetary and governmental institutions [Mariana = do you have a citation for this?].
+Why should it matter if values inform people's interst in cryptocurrencies? What makes values ultimately relevant is that they are culture-informed, have a developmental trajectory that is lifelong [@Smallenbroeketal2022], while they can change due to specific life events such as entering parenthood [@Lonnqvistetal2018], but also due to drastic changes in society such as due to the Covid-19 Pandemic [@Danieletal2022]. Cryptocurrencies hold several similarities with other technological advancements such as the Internet and mobile phones. Compared to previous advancements however, the notion of cryptocurrencies is also in a way an economic and a political statement [Mariana = do you have a citation for this?]. Though this technology is still in its onset, there are reasons to expect that it will impact people's financial awareness and potentially people's dependencies on established monetary and governmental institutions [Mariana = do you have a citation for this?].
 
 In other words, the concept of cryptocurrency is potentially going to shape in the future in currently unknown ways people's motivational goals. We speak of the future because we want to raise awareness that a new technology is now being adopted, in spite of groups of people being against it or disbelieving its mission. This is happening. Therefore, to begin understanding how this will shape our beliefs in the future, we reason that the pertinent first step is to explore what makes this technology possible from a social perspective. That is, why some people are interested, engaged with, and open for this form of finance, while others are not.
 
@@ -214,7 +214,9 @@ Model 1 included the intercept, and age, gender (1 = female, 0 = other), and edu
 
 We chose to include only openness to change and self-enhancement as predictors because (a) predictions regarding their effects were made and (b) this allowed us to avoid multicoliniarity that values with incompatible contents might bring to model estimation. Results based on regressions with non-hypothesized effects of incompatible value preferences are presented in the Appendix. 
 
-There were values missing at random on each of the five beliefs associated with cryptocurrencies. The missing values were estimated with a multivariate imputation technique by chained equations. This was done in R using the package _mice_ [@Buurenetal2011]. The approach is iterative and imputes missing information on a variable-by-variable basis according to conditional densities. Between 10 and 20 iterations are considered sufficient to arrive at a robust imputation model. Here, 10 iterations were used. We produced 5 imputed complete datasets which were pooled for estimation of models 1 to 4. Robustness of these imputations is provided in the Appendix.  
+There were values missing at random on each of the five beliefs associated with cryptocurrencies. The missing values were estimated with a multivariate imputation technique by chained equations. This was done in R using the package _mice_ [@Buurenetal2011]. The approach is iterative and imputes missing information on a variable-by-variable basis according to conditional densities. Between 10 and 20 iterations are considered sufficient to arrive at a robust imputation model. Here, 10 iterations were used. We produced 5 imputed complete datasets which were pooled for estimation of models 1 to 4. Robustness of these imputations is provided in the Appendix.
+
+Model fit improvement in nested models was evaluated using a loglikelihood comparison test on the imputed data (see above). A nested model is generally considered as contributing to variance explanation if the fuller model (with more predictors) has a loglikelihood that is greater than the loglikelihood of the emptier model (with fewer predictors). That is, if the comparison test is associated with a significant _p_-value. 
 
 # Results
 
@@ -348,9 +350,40 @@ plot_values("krybsz01")
 
 Figures \@ref(fig:p12) and \@ref(fig:p34) depict density distributions of value preferences. Value preferences are not making a difference between people in view of whether they have heard of cryptocurrencies or not. Nonetheless, values of self-transcendence are generally highly preferred both among people who have heard and haven't heard of cryptocurrencies, whereas values of self-enhancement are generally less preferred in both groups. We also note that density plots for self-enhancement and self-transcendence are different both in shape and central tendency (median displayed) between people who currently hold, previously held, or never held cryptocurrencies. Furthermore, values of self-enhancement and of self-transcendence are most visibly divergent between people who want to hold, do not want to hold, or are unsure about holding cryptocurrencies in the future. The fact that the density plots of these values are most visibly diverging suggests a robust finding, namely that the content incompatibility between the two had an effect on people's decision to, at some point in the past or future, acquire such assets as cryptocurrencies.
 
-The following section is dedicated to exploring the associations between value preferences and behavior and intention in view of cryptocurrencies, while effects due to demographics and beliefs associated with cryptocurrencies is accounted for as well. 
+The following section is dedicated to exploring associations between value preferences and behavior and intention in view of cryptocurrencies, while effects due to demographics and beliefs associated with cryptocurrencies are accounted for. 
 
 ## Logistic regressions
+
+Model fit indices and nested model comparisons for estimated logistic regression models are summarized in the Appendix. We note that the inclusion in model 4 of interaction terms between value preferences and beliefs about cryptocurrencies did not lead to an improvement in model fit over the estimated terms in model 3. That is, the interaction terms did not contribute to explaining either the cryptocurrency behavior nor the intention to hold cryptocurrencies. Thus, in the following paragraphs we focus on reporting main effects in models 1 to 3 and return to the finding concerning interaction terms in Discussion.
+
+```{r}
+# values
+sen_m3_b=res_hyp_cryptonow[6,10] %>%  as.numeric() %>% round(2)
+sen_m3_p=res_hyp_cryptonow[6,13] %>%  as.numeric() %>% round(2)
+och_m3_b=res_hyp_cryptonow[5,10] %>%  as.numeric() %>% round(2)
+och_m3_p=res_hyp_cryptonow[5,13] %>%  as.numeric() %>% round(2)
+
+sen_m3b_b=res_hyp_cryptofutr[6,10] %>%  as.numeric() %>% round(2)
+sen_m3b_p=res_hyp_cryptofutr[6,13] %>%  as.numeric() %>% round(2)
+och_m3b_b=res_hyp_cryptofutr[5,10] %>%  as.numeric() %>% round(2)
+och_m3b_p=res_hyp_cryptofutr[5,13] %>%  as.numeric() %>% round(2)
+
+och_m2b_b=res_hyp_cryptofutr[5,6] %>%  as.numeric() %>% round(2)
+och_m2b_p=res_hyp_cryptofutr[5,9] %>%  as.numeric() %>% round(2)
+
+# beliefs
+exch_m3_b=res_hyp_cryptonow[8,10] %>%  as.numeric() %>% round(2)
+exch_m3_p=res_hyp_cryptonow[8,13] %>%  as.numeric() %>% round(2)
+good_m3_b=res_hyp_cryptonow[11,10] %>%  as.numeric() %>% round(2)
+good_m3_p=res_hyp_cryptonow[11,13] %>%  as.numeric() %>% round(2)
+
+good_m3b_b=res_hyp_cryptofutr[11,10] %>%  as.numeric() %>% round(2)
+good_m3b_p=res_hyp_cryptofutr[11,13] %>%  as.numeric() %>% round(2)
+```
+
+Table 2 summarizes results of logistic regressions with cryptocurrency holding behavior as the outcome variable. The fullest model had the main effect of self-enhancement values as statistically significant and in the predicted direction (_b_ = `r sen_m3_b`, _p_ = `r sen_m3_p`), whereas the main effect of openness to change values was not significant (_b_ = `r och_m3_b`, _p_ = `r och_m3_p`). Furthermore, two of the five beliefs associated with cryptocurrencies had likewise a main effect that was statistically significant, namely a belief regarding the monetary exchange potential (_b_ = `r exch_m3_b`, _p_ = `r exch_m3_p`) and a belief that it was a good time to buy cryptocurrencies (_b_ = `r good_m3_b`, _p_ = `r good_m3_p`).
+
+Table 3 summarizes results of logistic regressions with intention to hold cryptocurrencies as the outcome variable. The fullest model had the main effect of openness to change values significant and in the predicted direction (_b_ = `r och_m3b_b`, _p_ = `r och_m3b_p`), whereas the main effect of self-enhancement values was not significant (_b_ = `r sen_m3b_b`, _p_ = `r sen_m3b_p`). The main effect of self-enhancement values however was significant in model 2, where the effects of beliefs were not included (_b_ = `r och_m2b_b`, _p_ = `r och_m2b_p`). Moreover, there was a significant main effect of the belief that it was a good time to buy cryptocurrencies (_b_ = `r good_m3b_b`, _p_ = `r good_m3b_p`).
 
 \newpage
 \blandscape <!---for landscape pages--->

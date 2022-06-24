@@ -390,6 +390,13 @@ mfit_cryptofutr <- mfit_cryptofutr %>%
   dplyr::select(-Outcome) %>% 
   relocate(N, .after=Model)
 
+### calculates odds ratio
+# see https://stackoverflow.com/questions/41384075/r-calculate-and-interpret-odds-ratio-in-logistic-regression
+# map because of the 5 iterations
+# unsure if relevant for continuous predictors
+m1.1$analyses %>% map(.,coef) %>% map(.,exp)
+
+
 # --- save
 save(list=c("impData","tbl_corr","mfit_cryptonow","mfit_cryptofutr","cnow","cfutr",
             "res_hyp_cryptonow","res_nohyp_cryptonow","res_hyp_cryptofutr","res_nohyp_cryptofutr"),
