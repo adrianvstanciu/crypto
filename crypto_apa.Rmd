@@ -118,7 +118,9 @@ This research sets to explore reasons why some people are interested in such new
 
 ## Cryptocurrencies
 
-[MB] As up to date as cryptocurrencies are, the most basic principle behind their conception is ancient: the cryptography. The purpose of using a technology over 4000 years old is to allow direct and private communication between two parties without the involvement of a third one. This way of communication if at the very heart of cryptocurrencies and the Internet. The available cryptocurrencies nowadays have a combination of cryptography with other technologies that made them feasible as Bitcoin that uses the blockchain technology to safely store and verify its transactions. Thanks to the combination of an ancient (cryptography) and a rather new technology (blockchain) that cryptocurrencies are digital, private and decentralized currencies. [MB]
+[MB] As up to date as cryptocurrencies are, the most basic principle behind their conception is ancient: the cryptography. The purpose of using a technology over 4000 years old is to allow direct and private communication between two parties without the involvement of a third one (Gensler 2018). This way of communication if at the very heart of cryptocurrencies and the Internet (Binance Academy 2019). Cryptocurrencies combine cryptography with other technologies that made them feasible, like Bitcoin that uses the blockchain technology to safely store and verify its transactions. Thanks to the combination of an ancient (cryptography) and a rather new technology (blockchain) that cryptocurrencies are digital, private and decentralized currencies. [MB]
+(Binance Academy (2019): History of Cryptography. Retrieved June 30, 2022 (https://academy.binance.com/en/articles/history-of-cryptography).
+(Gensler, Gary (2018): 15.S12 Blockchain and Money. Fall 2018. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. Retrieved June 30, 2022(https://www.youtube.com/watch?v=EH6vE97qIP4).
 
 ## Human values
 
