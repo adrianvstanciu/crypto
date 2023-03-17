@@ -5,18 +5,16 @@ cryptocurrency at levels of awareness, intention to buy and behavior.
 
 # Authors 
 
-1) Adrian Stanciu,  https://orcid.org/0000-0001-8149-7829
+1) Adrian Stanciu,  https://orcid.org/0000-0001-8149-7829; 
 GESIS-Leibniz Institute for the Social Sciences, Mannheim, Germany
 
-2) Mariana Bernardes
-
+2) Mariana Bernardes;
 University of Bremen, Bremen, Germany
 
-3) Melanie V. Partsch, https://orcid.org/0000-0002-0216-0492
-
+3) Melanie V. Partsch, https://orcid.org/0000-0002-0216-0492; 
 GESIS-Leibniz Institute for the Social Sciences, Mannheim, Germany
 
-4) Clemens M. Lechner, https://orcid.org/0000-0003-3053-8701
+4) Clemens M. Lechner, https://orcid.org/0000-0003-3053-8701;
 
 GESIS-Leibniz Institute for the Social Sciences, Mannheim, Germany
 
