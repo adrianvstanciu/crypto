@@ -1,5 +1,7 @@
 # Workshop Helper Functions
 
+library(sjlabelled)
+library(haven)
 
 naturalize_labelled_df <- function(labelled_df, levels = "default", 
                                    native_numerical_suffix = "", 
@@ -21,7 +23,7 @@ naturalize_labelled_df <- function(labelled_df, levels = "default",
   # Most variables will become numeric, except for string variables
   
   fctr_df <- labelled_df %>% 
-    select(where(is.labelled)) %>% 
+    dplyr::select(where(is.labelled)) %>% 
     rename_with(~ paste0(.x, fctr_suffix)) %>% 
     mutate(
       across(where(is.labelled), ~ as_factor(.x, levels = "both"))

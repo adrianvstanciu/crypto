@@ -1,0 +1,455 @@
+---
+title: "Can human values explain one’s interest in cryptocurrencies? An explorative study in Germany"
+author: 
+  - name: "Adrian Stanciu"
+    affiliation_number: 1
+  - name: "Melanie Partsch"
+    affiliation_number: 1
+  - name: "Mariana Bernardes"
+    affiliation_number: 2
+  - name: "Ranjit Singh"
+    affiliation_number: 1
+  - name: "Clemens Lechner"
+    affiliation_number: 1
+affiliations:
+  - "GESIS-Leibniz Institute for the Social Sciences, Mannheim"
+  - "University of Bremen, Bremen"
+shorttitle: "Values and cryptocurrencies"
+authors_note: "For correspondence contact Dr. Adrian Stanciu, Data and Research on Society, GESIS-Leibniz Institute for the Social Sciences, PO Box 12215, 68072 Mannheim, Germany. Email: adrian.stanciu[at]gesis.org"
+abstract: "Write abstract here"
+keywords: "Values, Cryptocurrencies, Germany"
+date: "`r format(Sys.time(), '%d. %B, %Y')`"
+doctype: doc
+header-includes:
+  - \usepackage{subfig}
+output: 
+  word_document:
+    reference_docx: word_template_apa.docx
+    toc: false
+csl: style/apa.csl
+bibliography: reference.bib
+---
+
+```{r setup, include=FALSE, results="asis"}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+r <- getOption("repos")
+r["CRAN"] <-"https://cloud.r-project.org/"
+options(repos=r)
+
+## these are packages needed for these analyses
+if (!require(tidyverse)) {
+    install.packages("tidyverse")
+    require(tidyverse)
+}
+if (!require(dplyr)) {
+    install.packages("dplyr")
+    require(dplyr)
+}
+if (!require(knitr)) {
+    install.packages("knitr")
+    require(knitr)
+}
+if (!require(wesanderson)) {
+    install.packages("wesanderson")
+    require(wesanderson)
+}
+if (!require(haven)) {
+    install.packages("haven")
+    require(haven)
+}
+if (!require(kableExtra)) {
+    install.packages("kableExtra")
+    require(kableExtra)
+}
+if (!require(DT)) {
+    install.packages("DT")
+    require(DT)
+}
+if (!require(Hmisc)) {
+  install.packages("Hmisc")
+  require(Hmisc)
+}
+if (!require(corrplot)) {
+  install.packages("corrplot")
+  require(corrplot)
+}
+
+# 
+remotes::install_github("maksimrudnev/LittleHelpers")
+# load packages
+library("tidyverse")
+library("dplyr")
+library("knitr")
+library("wesanderson")
+library("haven")
+library("kableExtra")
+library("DT")
+library("Hmisc")
+library("corrplot")
+
+# --- imports data
+load("data/df.Rdata")
+load("data/descriptives.Rdata")
+load("data/pca.Rdata")
+load("data/gradient.Rdata")
+load("data/represent.Rdata")
+load("data/reasons.Rdata")
+load("data/plots.Rdata")
+load("data/table_logreg.Rdata")
+
+# --- imports source scripts
+source("scripts/helper_functions.R")
+
+# --- theme for plots
+mytheme <- theme(axis.text.x = element_text(angle = 45, vjust = 0.9, hjust=1, size = 14),
+                 panel.background = element_rect(fill="white", color = "grey50"),
+                 panel.grid.major.y = element_line(color="grey90"),
+                 axis.title.y = element_text(vjust= 0.5, hjust=1, angle = 90,size=14))
+
+```
+
+# Adoption of cryptocurrencies correlates with human values
+
+-text here-
+
+## A Psychology of Cryptocurrency and Its Adopters
+
+-text here-
+
+## Values
+
+-text here-
+
+-figure: value circular here-
+
+-text here-
+
+## The Present Research
+
+-text here-
+
+# Method
+
+## Participants
+
+```{r}
+age.m = mean(df_ipst$age) %>% round_df()
+age.sd = sd(df_ipst$age) %>% round_df()
+age.min = as.numeric(summary(df_ipst$age)[1])
+age.max = as.numeric(summary(df_ipst$age)[6])
+p.fem = sample[17,5] %>% round_df()
+p.emp = sample[7,5] %>% round_df()
+p.educ = sample[4,5] %>% round_df()
+
+# 
+nstudy=unique(sample$total_n)
+```
+
+A total of _N_ = `r nstudy+ndrop` participants were interviewed in an online questionnaire by _respondi_ in April 2022 in Germany. 
+
+-text here-
+
+We had to exclude _n_ = `r ndrop` participants due to straightlining (identical answers on 15 consecutive items) and an overal lack of answer variation (within-person _sd_ < 0.50).
+
+The cleaned and final data for the present study had _N_ = `r nstudy` participants (age: *M* = `r age.m`, *SD* = `r age.sd`; Min = `r age.min`, Max = `r age.max`). Of these there were `r p.fem`% women, `r p.emp`% employed, and `r p.educ`% had finished at least ten classes in the local education system (i.e., *Mittlerer Schulabschluss*) (also see the Appendix).
+
+## Measurement
+
+-text here-
+
+### Values
+
+-text here-
+
+### Awwareness
+
+-text here-
+
+### Domain-Specific Beliefs About Cryptocurrency
+
+-text here-
+
+### Adoption
+
+#### Self-reported behavior
+
+-text here-
+
+#### Behavioral intention
+
+-text here-
+
+### Covariates
+
+-text here-
+
+## Aanalytical approach
+
+-text here-
+
+# Results
+
+## Descriptive  Statistics and Profile of Adopters
+
+-text here
+
+-table 1: cryptocurrency adoption in the present sample-
+
+```{r}
+# percentages
+peraware = gradient_descriptive[1,4] %>% as.numeric() %>% round_df()
+perawarenot = gradient_descriptive[2,4] %>% as.numeric() %>% round_df()
+# - holding
+perholdsnow = gradient_descriptive[3,4] %>% as.numeric() %>% round_df()
+perholdspast = gradient_descriptive[4,4] %>% as.numeric() %>% round_df()
+perholdsnever = gradient_descriptive[5,4] %>% as.numeric() %>% round_df()
+# - intention 
+perintyes = gradient_descriptive[6,4] %>% as.numeric() %>% round_df()
+perintno = gradient_descriptive[7,4] %>% as.numeric() %>% round_df()
+perintunsure = gradient_descriptive[8,4] %>% as.numeric() %>% round_df()
+# - intention if never held
+pernever.intyes = gradient_descriptive[10,4] %>% as.numeric() %>% round_df()
+pernever.intno = gradient_descriptive[11,4] %>% as.numeric() %>% round_df()
+pernever.intunsure = gradient_descriptive[12,4] %>% as.numeric() %>% round_df()
+# sample
+n_aware = gradient_descriptive[3,2] %>% as.numeric() %>% round_df()
+n_notaware = nstudy - n_aware  
+```
+
+
+```{r table1}
+# [-4] because third column in the table is smaple size, and that need not eb preented in the table
+df_represent_hov_joined[-4] %>% knitr::kable(caption = "The four higher order value preferences in the present data and ESS-2018", format="pipe",digits=2) %>% 
+  add_footnote(c("SEN = Self-enhancement, STR = Self-transcendence, OCH = Openness to change, CON = Conservation.",
+               "M = mean, SD = standard deviaiton, Med = median, Min = minimum value, Max = maximum value, SE = standard error"))
+```
+
+-text here-
+
+-[TO DO] table 2: profile of cryptocurrency adopters (according to past or current owning of cryptocurrency)-
+
+-[TO DO] table 3: correlations between all variables-
+
+```{r table2_corr}
+crr_cor %>% knitr::kable(format="pipe",digits=2)
+```
+
+
+```{r table2_p}
+crr_p %>% knitr::kable(format="pipe",digits=2)
+```
+
+## Associations With Values and Domain-Specific Beliefs
+
+
+
+
+### Role of values
+
+```{r p12, fig.cap="Awareness of and holding behavior of digital- and/or cryptocurrencies",fig.subcap=c("Awareness","Holding behavior now or in the past"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
+# p1
+df_long %>% plot_values("krybws01")
+# p2
+df_long %>% 
+  filter(krybws01 == "Has heard")%>% 
+  plot_values("krybst01")
+```
+
+```{r p34, fig.cap="Intention to hold digital- and/or cryptocurrencies in the future", fig.subcap=c("Has heard and previously held","Has heard but never held"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
+# p3
+df_long %>% 
+  filter(krybws01 == "Has heard")%>% 
+plot_values("krybsz01")
+# p4
+df_long %>% 
+  filter(krybws01 == "Has heard",
+         krybst01 == "Never held")%>% 
+plot_values("krybsz01")
+```
+
+Figures \@ref(fig:p12) and \@ref(fig:p34) depict density distributions of value preferences. Value preferences are not making a difference between people in view of whether they have heard of cryptocurrencies or not. Nonetheless, values of self-transcendence are generally highly preferred both among people who have heard and haven't heard of cryptocurrencies, whereas values of self-enhancement are generally less preferred in both groups. We also note that density plots for self-enhancement and self-transcendence are different both in shape and central tendency (median displayed) between people who currently hold, previously held, or never held cryptocurrencies. Furthermore, values of self-enhancement and of self-transcendence are most visibly divergent between people who want to hold, do not want to hold, or are unsure about holding cryptocurrencies in the future. The fact that the density plots of these values are most visibly diverging suggests a robust finding, namely that the content incompatibility between the two had an effect on people's decision to, at some point in the past or future, acquire such assets as cryptocurrencies.
+
+The following section is dedicated to exploring associations between value preferences and behavior and intention in view of cryptocurrencies, while effects due to demographics and beliefs associated with cryptocurrencies are accounted for. 
+
+## Logistic regressions
+
+Model fit indices and nested model comparisons for estimated logistic regression models are summarized in the Appendix. We note that the inclusion in model 4 of interaction terms between value preferences and beliefs about cryptocurrencies did not lead to an improvement in model fit over the estimated terms in model 3. That is, the interaction terms did not contribute to explaining either the cryptocurrency behavior nor the intention to hold cryptocurrencies. Thus, in the following paragraphs we focus on reporting main effects in models 1 to 3 and return to the finding concerning interaction terms in Discussion.
+
+```{r}
+# values
+sen_m3_b=res_hyp_cryptonow[6,10] %>%  as.numeric() %>% round(2)
+sen_m3_p=res_hyp_cryptonow[6,13] %>%  as.numeric() %>% round(2)
+och_m3_b=res_hyp_cryptonow[5,10] %>%  as.numeric() %>% round(2)
+och_m3_p=res_hyp_cryptonow[5,13] %>%  as.numeric() %>% round(2)
+
+sen_m3b_b=res_hyp_cryptofutr[6,10] %>%  as.numeric() %>% round(2)
+sen_m3b_p=res_hyp_cryptofutr[6,13] %>%  as.numeric() %>% round(2)
+och_m3b_b=res_hyp_cryptofutr[5,10] %>%  as.numeric() %>% round(2)
+och_m3b_p=res_hyp_cryptofutr[5,13] %>%  as.numeric() %>% round(2)
+
+och_m2b_b=res_hyp_cryptofutr[5,6] %>%  as.numeric() %>% round(2)
+och_m2b_p=res_hyp_cryptofutr[5,9] %>%  as.numeric() %>% round(2)
+
+# beliefs
+exch_m3_b=res_hyp_cryptonow[8,10] %>%  as.numeric() %>% round(2)
+exch_m3_p=res_hyp_cryptonow[8,13] %>%  as.numeric() %>% round(2)
+good_m3_b=res_hyp_cryptonow[11,10] %>%  as.numeric() %>% round(2)
+good_m3_p=res_hyp_cryptonow[11,13] %>%  as.numeric() %>% round(2)
+
+good_m3b_b=res_hyp_cryptofutr[11,10] %>%  as.numeric() %>% round(2)
+good_m3b_p=res_hyp_cryptofutr[11,13] %>%  as.numeric() %>% round(2)
+```
+
+Table 2 summarizes results of logistic regressions with cryptocurrency holding behavior as the outcome variable. The fullest model had the main effect of self-enhancement values as statistically significant and in the predicted direction (_b_ = `r sen_m3_b`, _p_ = `r sen_m3_p`), whereas the main effect of openness to change values was not significant (_b_ = `r och_m3_b`, _p_ = `r och_m3_p`). Furthermore, two of the five beliefs associated with cryptocurrencies had likewise a main effect that was statistically significant, namely a belief regarding the monetary exchange potential (_b_ = `r exch_m3_b`, _p_ = `r exch_m3_p`) and a belief that it was a good time to buy cryptocurrencies (_b_ = `r good_m3_b`, _p_ = `r good_m3_p`).
+
+Table 3 summarizes results of logistic regressions with intention to hold cryptocurrencies as the outcome variable. The fullest model had the main effect of openness to change values significant and in the predicted direction (_b_ = `r och_m3b_b`, _p_ = `r och_m3b_p`), whereas the main effect of self-enhancement values was not significant (_b_ = `r sen_m3b_b`, _p_ = `r sen_m3b_p`). The main effect of self-enhancement values however was significant in model 2, where the effects of beliefs were not included (_b_ = `r och_m2b_b`, _p_ = `r och_m2b_p`). Moreover, there was a significant main effect of the belief that it was a good time to buy cryptocurrencies (_b_ = `r good_m3b_b`, _p_ = `r good_m3b_p`).
+
+\newpage
+\blandscape <!---for landscape pages--->
+
+```{r t2}
+options(knitr.kable.NA = "")
+
+res_hyp_cryptonow %>% knitr::kable(caption="Results for logistic regression carried out according to the hypothesized effects on holding cryptocurrencies behavior", format="pipe",digits = 2) %>% 
+  add_footnote(c("Outcome variable was coded 1 = currently holds or in the past held, 0 = never held",
+                 "OCH = openness to change, SEN = self-enhancement",
+                 "Model estimations based on data pooled from 5 iterations of missing value imputation",
+                 "Suffixes m1, m2, and m3 stand for estimated models",
+                 "p = p value",
+                 "Test = test statistic",
+                 "b = regression beta coefficient",
+                 "Df = degrees of freedom"))
+```
+
+\newpage
+
+```{r t3}
+options(knitr.kable.NA = "")
+
+res_hyp_cryptofutr %>% knitr::kable(caption="Results for logistic regression carried out according to the hypothesized effects on intention to hold cryptocurrencies", format="pipe",digits = 2) %>% 
+  add_footnote(c("Outcome variable was coded 1 = would like to hold, 0 = would not want to hold or unsure",
+                 "OCH = openness to change, SEN = self-enhancement",
+                 "Model estimations based on data pooled from 5 iterations of missing value imputation",
+                 "Suffixes m1, m2, and m3 stand for estimated models",
+                 "p = p value",
+                 "Test = test statistic",
+                 "b = regression beta coefficient",
+                 "Df = degrees of freedom"))
+```
+
+\elandscape <!---closes landscape pages--->
+
+
+
+# Discussion
+
+Our sample was not representative to the German general population, but it used strict quotas of gender, age and education. Please note that our intention was to gain first insights into an overall pattern regarding adoption of cryptocurrencies in society.
+
+## Limitations and future research
+
+# Conclusion
+
+# References
+
+
+<div id="refs"></div> <!---wichtig für Anlage Teil, sonst Literaturverzeichnis wird am Ende des Dokuments angehängt--->
+
+\newpage
+\blandscape <!---for landscape pages--->
+
+# Appendix
+
+## 1 Sample representativity
+
+```{r apend1}
+# sample representativity compared to microcensus (fehlt noch) and ess 2018
+dissim_prop %>% 
+  knitr::kable(caption = "Sample representativity after age, education, and gender compared to Microcenus 2020 and European Social Survey 2018",
+               format="pipe", digits = 2) %>%
+ add_footnote("Relative percentages from the sample indicated in column Data.")
+```
+
+## 2 Gradient from interest to behavior 
+
+```{r apend2}
+# alternative to the one below
+gradient_descriptive %>% knitr::kable(caption="Gradient interest in cryptocurrencies in the present sample",
+                                      format="pipe", digits = 2) %>% 
+  add_footnote("Awareness = 'If the study participant has previously heard of cryptocurrencies or digital currencies',
+               Holding = 'If the study participant currently holds or in the past has held cryptocurrencies or digital currencies',
+               Holding intention = 'If the study participant intends to hold cryptocurrencies or digital currencies in the future',
+               Holding intention if never held = the holding intention question asked only to those study participants who said they never held cryptocurrencies or digital currencies.")
+```
+
+## 3 Model fit indices
+
+```{r}
+mfit_cryptonow %>% knitr::kable(caption = "Model fit indices for logistic regression on holding cryptocurrencies behavior",
+                                format="pipe",digits=2) %>% 
+  add_footnote(c("LogLik = Loglikelihood",
+                 "Fit indices calculated on data pooled from 5 iterations of missing values imputation"))
+```
+
+```{r}
+mfit_cryptofutr %>% knitr::kable(caption = "Model fit indices for logistic regression on intention to hold cryptocurrencies in the future",
+                                format="pipe",digits=2) %>% 
+  add_footnote(c("LogLik = Loglikelihood",
+                 "Fit indices calculated on data pooled from 5 iterations of missing values imputation"))
+```
+
+## 4 Nested model comparison
+
+```{r}
+cnow %>% knitr::kable(caption="Nested model comparisons for holding cryptocurrencies behavior", format="pipe",digits = 2) %>% 
+  add_footnote(c("Loglikelihood based comparison",
+                 "Model comparison based on data pooled from 5 iterations of missing values imputation",
+                 "Column p contains p-values associated with the likelihood comparison test. Non-significant values indicate nested models that are not better fitted."))
+```
+
+```{r}
+cfutr %>% knitr::kable(caption="Nested model comparisons for intention to hold cryptocurrencies in the future", format="pipe",digits = 2) %>% 
+  add_footnote(c("Loglikelihood based comparison",
+                 "Model comparison based on data pooled from 5 iterations of missing values imputation",
+                 "Column p contains p-values associated with the likelihood comparison test. Non-significant values indicate nested models that are not better fitted."))
+```
+
+## 5 Logistic regression with opposing value preferences than those predicted
+
+```{r}
+options(knitr.kable.NA = "")
+
+res_nohyp_cryptonow %>% knitr::kable(caption="Results for logistic regression carried out using value preferences that are in contradiction to those from the hypothesized effects on holding cryptocurrencies behavior", format="pipe",digits = 2) %>% 
+  add_footnote(c("Outcome variable was coded 1 = would like to hold, 0 = would not want to hold or unsure",
+                 "OCH = openness to change, SEN = self-enhancement",
+                 "Model estimations based on data pooled from 5 iterations of missing value imputation",
+                 "Suffixes m1, m2, and m3 stand for estimated models",
+                 "p = p value",
+                 "Test = test statistic",
+                 "b = regression beta coefficient",
+                 "Df = degrees of freedom"))
+```
+
+```{r}
+options(knitr.kable.NA = "")
+
+res_nohyp_cryptofutr %>% knitr::kable(caption="Results for logistic regression carried out using value preferences that are in contradiction to those from the hypothesized effects on intention to hold cryptocurrencies", format="pipe",digits = 2) %>% 
+  add_footnote(c("Outcome variable was coded 1 = would like to hold, 0 = would not want to hold or unsure",
+                 "OCH = openness to change, SEN = self-enhancement",
+                 "Model estimations based on data pooled from 5 iterations of missing value imputation",
+                 "Suffixes m1, m2, and m3 stand for estimated models",
+                 "p = p value",
+                 "Test = test statistic",
+                 "b = regression beta coefficient",
+                 "Df = degrees of freedom"))
+```
+
+## 6 Robustness check of imputed datasets
+
+```{r,fig.cap="Robustness check for imputed data. Blue color depicts observed data", fig.subcap=c("Stripplot for observed vs. imputed data","Denisty plots for observed vs. imputed data"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
+mice::stripplot(impData)
+mice::densityplot(impData)
+```
+
+
+\elandscape
