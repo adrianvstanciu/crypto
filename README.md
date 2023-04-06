@@ -1,7 +1,6 @@
 # Basic human values and the adoption of cryptocurrency
 
-This manuscript explores the associations between basic human values in the Theory of Basic Human Values by Shalom H. Schwartz and 
-cryptocurrency at levels of awareness, intention to buy and behavior.
+This manuscript explores the associations between basic human values in the Theory of Basic Human Values by Shalom H. Schwartz and cryptocurrency at levels of awareness, intention to buy and behavior.
 
 # Authors 
 

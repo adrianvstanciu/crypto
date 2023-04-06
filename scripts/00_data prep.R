@@ -283,7 +283,7 @@ df_crypto <- df_ipst %>%
   mutate_at(vars("employ"),
             function(x) case_when(
               x == 1 ~ 1, # Angestellt (employed)
-              x == 2 ~ 0, # Selbstständig
+              x == 2 ~ 1, # Selbstständig
               x == 3 ~ 0, # Arbeitslos und Arbeitssuchend
               x == 4 ~ 0, # Arbeitslos und nicht Arbeitssuchen
               x == 5 ~ 0, # Hausfrau/Hausmann
@@ -300,14 +300,17 @@ df_crypto <- df_ipst %>%
          regularization=krymng03,
          illegal=krymng04,
          goodtime=krymng05,
+         understands=kryvst01,
          aware=krybws01,
          holds=krybst01,
          intends=krybsz01) %>% 
    set_na(investment:goodtime,na=c(-77,8)) %>% 
+  set_na(understands,na=c(-77)) %>% 
   dplyr::select(female,abitur,age,employed, # covariates
                 aware:intends, # outcome variables
                 pvq_STR:pvq_OCH, # ipsatized values
-                investment:goodtime # beliefs about crypto
+                investment:goodtime, # beliefs about crypto
+                understands # how well understands cryptocurrencies
                 )
 
 # - inspects data
