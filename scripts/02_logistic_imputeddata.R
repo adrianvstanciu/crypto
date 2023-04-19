@@ -136,17 +136,17 @@ label_belief2 <-as_labeller(c(`1`="Disagrees it can be exchanged for money",
                               `5`="Agrees it can be exchanged for money"))
 
 # creates labels for good time, exchange and for understands
-lab.goodtime<-as_labeller(c(`1`="Disagrees it is a good time to buy",
+lab.goodtime<-as_labeller(c(`1`="Not a good time to buy",
                             `3`="Neutral",
-                            `5`="Agrees it is a good time to buy"))
+                            `5`="A good time to buy"))
 
-lab.exchange<-as_labeller(c(`1`="Disagrees it is an exchange opportunity",
+lab.exchange<-as_labeller(c(`1`="Not an exchange opportunity",
                             `3`="Neutral",
-                            `5`="Agrees it is an exchange opportunity"))
+                            `5`="An exchange opportunity"))
 
-lab.understands<-as_labeller(c(`1`="Doesn't understand cryotpcurrencies",
+lab.understands<-as_labeller(c(`1`="Doesn't understand",
                                `3`="Neutal",
-                               `5`="Understands well cryptocurrencies"))
+                               `5`="Understands well"))
 ################## aware of crypto models ##############
 ## - step 1
 m_impute0.1a <- with(impData,
@@ -170,17 +170,17 @@ datplot0.1<-slopes(m_impute0.1a,
                    variables="pvq_OCH",
                    newdata=nd0.1)
 
-#png("img/fig_ME_aware.png",units = "in",width=9, height= 6,res=300)
+#png("img/fig_ME_aware_color.png",units = "in",width=6, height= 4,res=300)
 ggplot(datplot0.1,aes(x=factor(abitur),y=estimate,color=factor(female),shape=factor(female),
                       ymin=conf.low,ymax=conf.high))+
-  #scale_color_manual(values=cbPalette)+
+  scale_color_manual(values=cbPalette)+
   geom_pointrange() + 
   labs(y="Marginal effects of 'Openness to change' (95% CI) on 
        'Is aware of cryptocurrency'",
        x="Has Abitur",
        color="Is female",
        shape="Is female") + 
-  scale_color_grey()+ 
+  #scale_color_grey()+ 
   theme_classic()
 #dev.off()
 
@@ -224,6 +224,9 @@ marg_eff_m1.2b <-marginaleffects::avg_slopes(m_impute1.2b)
 marg_eff_m1.2b
 mice::glance(marg_eff_m1.2b)
 
+# - nested model comparison
+D3(m_impute1.2b,m_impute1.1b)
+
 
 # creates datagrid for calculating marginal probabilities and later plotting them
 shortData2<-shortData %>% filter(aware==1 & holds==0)
@@ -239,17 +242,17 @@ datplot1.2<-slopes(m_impute1.2b,
                       variables="pvq_SEN",
                       newdata=nd1.1)
 
-#png("img/fig_ME_intention.png",units = "in",width=9, height= 6,res=300)
+#png("img/fig_ME_intention_color.png",units = "in",width=8, height=4,res=300)
 ggplot(datplot1.2,aes(x=factor(goodtime),y=estimate,color=factor(understands), shape=factor(understands),
                          ymin=conf.low,ymax=conf.high))+ 
-  #scale_color_manual(values=cbPalette)+
+  scale_color_manual(values=cbPalette)+
   geom_pointrange() + 
   labs(y="Marginal effects of 'Self-enhancement' (95% CI) on 
        'Intends to buy cryptocurrency'",
        x="It is a good time to buy cryptocurrency",
        color="Understands cryptocurrencies",
        shape="Understands cryptocurrencies") + 
-  scale_color_grey()+
+  #scale_color_grey()+
   theme_classic()
 #dev.off()
 
@@ -279,6 +282,9 @@ marg_eff_m2.2a <-marginaleffects::avg_slopes(m_impute2.2a)
 marg_eff_m2.2a
 mice::glance(marg_eff_m2.2a)
 
+# LR nested model comparison
+D3(m_impute2.2a,m_impute2.1a)
+
 # ME self-enhancement plotted for understands, good time, age, female
 # creates datagrid for calculating marginal probabilities and later plotting them
 nd2.2_1<-datagrid(newdata=shortData,
@@ -294,12 +300,12 @@ datplot2.2a_1<-slopes(m_impute2.2a,
                 newdata=nd2.2_1)
 
 
-#png("img/fig_ME_behavior.png",units = "in",width=10, height= 8,res=300)
+#png("img/fig_ME_behavior_color.png",units = "in",width=8, height= 6,res=300)
 ggplot(datplot2.2a_1,aes(x=age,y=estimate,color=factor(female),shape=factor(understands),
                          ymin=conf.low,ymax=conf.high))+
-  #scale_color_manual(values=cbPalette)+
+  scale_color_manual(values=cbPalette)+
   geom_line(linewidth=1.5) + 
-  geom_ribbon(alpha=.05) + 
+  geom_ribbon(alpha=.05, linetype=0) + 
   facet_grid(goodtime ~ understands, 
              labeller=labeller(goodtime=lab.goodtime,
                                understands=lab.understands)) + 
@@ -308,7 +314,7 @@ ggplot(datplot2.2a_1,aes(x=age,y=estimate,color=factor(female),shape=factor(unde
        x="Age",
        color="Is female",
        facet="Good time to buy cryptocurrency") + 
-  scale_color_grey() + 
+  #scale_color_grey() + 
   theme_classic()
 #dev.off()
 
@@ -327,12 +333,12 @@ datplot2.2a_2<-slopes(m_impute2.2a,
                       newdata=nd2.2_2)
 
 
-#png("img/fig_ME_behavior_2_color.png",units = "in",width=10, height= 8,res=300)
+#png("img/fig_ME_behavior_2_color.png",units = "in",width=8, height=6,res=300)
 ggplot(datplot2.2a_2,aes(x=age,y=estimate,color=factor(female),shape=factor(understands),
                          ymin=conf.low,ymax=conf.high))+
   scale_color_manual(values=cbPalette)+
   geom_line(linewidth=1.5) + 
-  geom_ribbon(alpha=.05) + 
+  geom_ribbon(alpha=.05, linetype=0) + 
   facet_grid(exchange ~ understands, 
              labeller=labeller(exchange=lab.exchange,
                                understands=lab.understands)) + 

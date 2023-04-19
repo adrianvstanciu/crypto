@@ -50,8 +50,10 @@ sample<-df_crypto %>%
 
 ############## calculates correlations ########
 
-crr_cor<-Hmisc::rcorr(as.matrix(df_crypto))$r %>% round_df()
-crr_p<-Hmisc::rcorr(as.matrix(df_crypto))$P %>% round_df()
+dftmp<-df_crypto %>% 
+  dplyr::select(aware,intends,holds,age,female,abitur,employed,pvq_SEN,pvq_OCH,understands,investment,exchange,regularization,illegal,goodtime)
+crr_cor<-Hmisc::rcorr(as.matrix(dftmp))$r %>% round_df()
+crr_p<-Hmisc::rcorr(as.matrix(dftmp))$P %>% round_df()
 
 
 ########## gets gradients of awareness, intention and behavior ########
@@ -71,6 +73,12 @@ gradient_aware <- df_crypto %>%
          prop=100*n/total_n,
          cum=100*cumsum(prop/sum(prop)))
 
+# profile of those who heard
+profaware<-df_crypto %>% 
+  filter(aware==1) %>% 
+  dplyr::select(age,female,abitur,employed, pvq_SEN,pvq_OCH)
+psych::describe(profaware)
+
 # intention
 tmpint<-df_crypto %>% 
   filter(aware==1 & holds==0)
@@ -84,6 +92,11 @@ gradient_intention <- tmpint %>%
   mutate(total_n=sum(n),
          prop=100*n/total_n,
          cum=100*cumsum(prop/sum(prop)))
+
+profintends<-df_crypto %>% 
+  filter(aware==1 & holds == 0 & intends == 1) %>% 
+  dplyr::select(age,female,abitur,employed, pvq_SEN,pvq_OCH)
+psych::describe(profintends)
 
 # behavior
 tmphold<-df_crypto %>% 
@@ -99,6 +112,11 @@ gradient_behavior <- tmphold %>%
          prop=100*n/total_n,
          cum=100*cumsum(prop/sum(prop)))
 
+profholds<-df_crypto %>% 
+  filter(aware==1 & holds == 1) %>% 
+  dplyr::select(age,female,abitur,employed, pvq_SEN,pvq_OCH)
+psych::describe(profholds)
+
 descrbdata<-full_join(gradient_aware,gradient_intention) %>% full_join(gradient_behavior)
 
 
@@ -113,7 +131,7 @@ ggplot(descrbdata,aes(x=name,y=n,fill=factor(value)))+
            and never held cryptocurrency, N=538",vjust=-0.5)+
   geom_text(aes(label=paste0(round(prop,2)," %")),position=position_stack(),vjust=2) + 
   labs(y="Sample size", 
-       x="Cryptocurrency levels",
+       x="Cryptocurrency adoption",
        fill="Level") + theme_classic()
 #dev.off()
 
