@@ -26,6 +26,7 @@ This repository contains raw data and scripts that can be used to replicate the 
 ## Data
 
 The folder _data_ contains the raw data in spss format .sav "data.sav", as well as .Rdata objects for descriptive statistics and the prepared data for analyses. 
+
 Also here are provided the case ids in excel format .xlsx that we identified as having straightlining (identical answers). More details in the manuscript. 
 
 ## Scripts

@@ -135,6 +135,59 @@ ggplot(descrbdata,aes(x=name,y=n,fill=factor(value)))+
        fill="Level") + theme_classic()
 #dev.off()
 
+
+# --- creates sankey diagram
+#install.packages("circlize")
+#install.packages("networkD3")
+
+# install.packages("devtools")
+# devtools::install_github("davidsjoberg/ggsankey")
+library(ggsankey)
+
+tmp<-df_crypto %>% dplyr::select(aware,intends,holds) 
+
+tmp2<-tmp %>% dplyr::rename(Awareness=aware,
+                     `Future intention`=intends,
+                     Ownership=holds)
+
+tmp2$Awareness<-factor(tmp2$Awareness,
+                  levels=c(0,1),
+                  labels=c("Not aware","Aware"))
+
+tmp2$`Future intention`<-factor(tmp2$`Future intention`,
+                    levels=c(0,1),
+                    labels=c("No intention","Intention"))
+
+tmp2$Ownership<-factor(tmp2$Ownership,
+                  levels=c(0,1),
+                  labels=c("No ownership","Ownership"))
+
+df_skey<-tmp2 %>% make_long(Awareness,`Future intention`,Ownership)
+
+count_tmp<-df_skey %>% group_by(x,node) %>% summarise(count=n())
+
+df_skey_count <- df_skey %>% left_join(count_tmp)
+
+#png("img/fig_sample_cryptoadoption_2.png",units = "in",width=10, height= 6,res=300)
+skeypl <- ggplot(df_skey_count, aes(x = x
+                              , next_x = next_x
+                              , node = node
+                              , next_node = next_node
+                              , fill = factor(node)
+                              , label = paste0(node, " (n = ", count, ")"))) +
+  geom_sankey(flow.alpha = 0.5
+              ,node.color = "gray30"
+              ,show.legend = FALSE) + 
+  geom_sankey_label(size=3,
+                    fill="white") + 
+  labs(x=NULL)+
+  theme(legend.position = "none") +
+  theme_sankey(base_size=16)
+
+skeypl
+#dev.off()
+
+
 # --- save data
 save(list=c("sample","crr_cor","crr_p",
             "gradient_aware","gradient_intention","gradient_behavior"),

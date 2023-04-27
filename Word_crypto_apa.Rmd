@@ -447,8 +447,8 @@ res_nohyp_cryptofutr %>% knitr::kable(caption="Results for logistic regression c
 ## 6 Robustness check of imputed datasets
 
 ```{r,fig.cap="Robustness check for imputed data. Blue color depicts observed data", fig.subcap=c("Stripplot for observed vs. imputed data","Denisty plots for observed vs. imputed data"),fig.asp=1,fig.ncol=2,out.width=".49\\linewidth",fig.pos="H"}
-mice::stripplot(impData)
-mice::densityplot(impData)
+#mice::stripplot(impData)
+#mice::densityplot(impData)
 ```
 
 
