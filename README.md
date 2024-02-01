@@ -6,7 +6,7 @@ This manuscript explores the associations between basic human values in the Theo
 
 1) Adrian Stanciu
 - https://orcid.org/0000-0001-8149-7829
-- GESIS-Leibniz Institute for the Social Sciences, Mannheim, Germany
+- University of Luxembourg, Luxembourg
 
 2) Mariana Bernardes
 - University of Bremen, Bremen, Germany
