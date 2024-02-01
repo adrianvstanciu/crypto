@@ -9,7 +9,7 @@ This manuscript explores the associations between basic human values in the Theo
 - University of Luxembourg, Luxembourg
 
 2) Mariana Bernardes
-- University of Bremen, Bremen, Germany
+- Independent Researcher
 
 3) Melanie V. Partsch 
 - https://orcid.org/0000-0002-0216-0492
